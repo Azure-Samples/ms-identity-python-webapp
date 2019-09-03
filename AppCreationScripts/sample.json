@@ -13,7 +13,7 @@
   */
   "AADApps": [
     {
-      "Id": "python-webapp",
+      "Id": "pythonwebapp",
       "Name": "python-webapp",
       "Kind": "WebApp", /* SinglePageApplication, WebApp, Mobile, UWP, Desktop, Daemon, WebApi, Browserless */
       "Audience": "AzureADandPersonalMicrosoftAccount", /* AzureADMyOrg, AzureADMultipleOrgs, AzureADandPersonalMicrosoftAccount, PersonalMicrosoftAccount */
@@ -39,7 +39,7 @@
   */
   "CodeConfiguration": [
     {
-      "App": "webApp",
+      "App": "pythonwebapp",
       "SettingKind": "Text",
       "SettingFile": "\\..\\app_config.py",
       "Mappings": [
