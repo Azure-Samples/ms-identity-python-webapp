@@ -13,7 +13,6 @@ app = Flask(__name__)
 app.config.from_object('config.Config')
 sess.init_app(app)
 
-config = json.load(open(sys.argv[1]))
 cache = msal.SerializableTokenCache()
 application = msal.ConfidentialClientApplication(
     app_config.CLIENT_ID, authority=app_config.AUTHORITY,
