@@ -44,7 +44,7 @@
       "SettingFile": "\\..\\app_config.py",
       "Mappings": [
         {
-          "key": "TENANT",
+          "key": "TENANT =",
           "value": "$tenantName"
         },
         {
