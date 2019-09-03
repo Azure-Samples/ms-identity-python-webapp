@@ -3,9 +3,7 @@ import flask
 import requests
 from flask import Flask, render_template, session, request
 from flask_session import Session
-import json
 import msal
-import sys
 import app_config
 
 sess = Session()
