@@ -3,7 +3,8 @@
     "RepositoryUrl": "https://github.com/Azure-Samples/ms-identity-python-webapp",
     "Title": "Integrating Microsoft Identity Platform with a Python web application",
     "Level": 300,
-    "Service": "Python Web Application",
+    "Client": "Python Web Application",
+    "Service": "Microsoft Graph",
     "Endpoint": "Microsoft identity platform (formerly Azure AD v2.0)"
   },
 
