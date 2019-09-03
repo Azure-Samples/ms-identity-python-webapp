@@ -11,7 +11,7 @@ endpoint: Microsoft Identity platform (formerly Azure AD v2.0)
 
 ## About this sample
 
-> This sample is also available as a quickstart for the Microsoft identity platform: [Quickstart: Add sign-in with Microsoft to a Java web app]("insert_url_here")
+> This sample is also available as a quickstart for the Microsoft identity platform: [Quickstart: Add sign-in with Microsoft to a Python web app]("insert_url_here")
 
 ### Overview
 
