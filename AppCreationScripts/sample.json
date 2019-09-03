@@ -40,19 +40,19 @@
   "CodeConfiguration": [
     {
       "App": "pythonwebapp",
-      "SettingKind": "Text",
+      "SettingKind": "Replace",
       "SettingFile": "\\..\\app_config.py",
       "Mappings": [
         {
-          "key": "TENANT =",
+          "key": "tenant-name",
           "value": "$tenantName"
         },
         {
-          "key": "CLIENT_SECRET",
+          "key": "client-secret-obtained-during-app-registration",
           "value": ".AppKey"
         },
         {
-          "key": "CLIENT_ID",
+          "key": "client-id-as-obtained-during-app-registration",
           "value": ".AppId"
         }
       ]
