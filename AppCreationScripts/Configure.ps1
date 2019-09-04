@@ -226,7 +226,7 @@ Function ConfigureApplications
    # Update config file for 'pythonwebapp'
    $configFile = $pwd.Path + "\..\app_config.py"
    Write-Host "Updating the sample code ($configFile)"
-   $dictionary = @{ "tenant-name" = $tenantName;"client-secret-obtained-during-app-registration" = $pythonwebappAppKey;"client-id-as-obtained-during-app-registration" = $pythonwebappAadApplication.AppId };
+   $dictionary = @{ "Enter_the_Tenant_Name_Here" = $tenantName;"Enter_the_Client_Secret_Here" = $pythonwebappAppKey;"Enter_the_Application_Id_here" = $pythonwebappAadApplication.AppId };
    ReplaceInTextFile -configFilePath $configFile -dictionary $dictionary
   
    Add-Content -Value "</tbody></table></body></html>" -Path createdApps.html  

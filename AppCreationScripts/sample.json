@@ -44,15 +44,15 @@
       "SettingFile": "\\..\\app_config.py",
       "Mappings": [
         {
-          "key": "tenant-name",
+          "key": "Enter_the_Tenant_Name_Here",
           "value": "$tenantName"
         },
         {
-          "key": "client-secret-obtained-during-app-registration",
+          "key": "Enter_the_Client_Secret_Here",
           "value": ".AppKey"
         },
         {
-          "key": "client-id-as-obtained-during-app-registration",
+          "key": "Enter_the_Application_Id_here",
           "value": ".AppId"
         }
       ]

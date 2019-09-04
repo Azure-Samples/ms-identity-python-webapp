@@ -36,7 +36,7 @@ def index():
 def authenticate():
     # Call to the authorize endpoint
     auth_state = str(uuid.uuid4())
-    session['state'] = auth_state
+    session[(request.cookies.get("session")+'state')] = auth_state
     authorization_url = application.get_authorization_request_url(app_config.SCOPE, state=auth_state,
                                                                   redirect_uri=app_config.REDIRECT_URI)
     resp = flask.Response(status=307)
@@ -49,7 +49,7 @@ def main_logic():
     code = flask.request.args['code']
     state = flask.request.args['state']
     # Raising error if state does not match
-    if state != session['state']:
+    if state != session[(request.cookies.get("session")+'state')]:
         raise ValueError("State does not match")
     result = None
     # Checking token cache for accounts
