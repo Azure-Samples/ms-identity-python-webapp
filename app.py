@@ -1,7 +1,7 @@
 import uuid
 import flask
 import requests
-from flask import Flask, render_template, session, request, url_for
+from flask import Flask, render_template, session, request
 from flask_session import Session
 import msal
 import app_config
@@ -58,7 +58,7 @@ def processing():
     if is_session is None:
         session[request.cookies.get("session")] = ''
     cache.deserialize(session.get(request.cookies.get("session")))
-    return flask.redirect(url_for('my_info'))
+    return flask.redirect(flask.url_for('my_info'))
 
 
 @app.route('/my_info')
