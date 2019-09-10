@@ -15,23 +15,22 @@ endpoint: Microsoft Identity platform (formerly Azure AD v2.0)
 
 ### Overview
 
-This sample demonstrates a Python Web Application application calling The Microsoft Graph.
+This sample demonstrates a Python web application that signs-in users with the Microsoft identity platform and calls the Microsoft Graph 
 
-1. The python web application uses the MicroSoft Authentication Library (MSAL) to obtain a JWT access token from Azure Active Directory (Azure AD):
+1. The python web application uses the Microsoft Authentication Library (MSAL) to obtain a JWT access token from the Microsoft identity platform (formerly Azure AD v2.0):
 2. The access token is used as a bearer token to authenticate the user when calling the Microsoft Graph.
 
 ![Overview](./ReadmeFiles/topology.png)
 
 ### Scenario
 
-This sample shows how to build a Python web app that uses OAuth2 to get access to Microsoft Graph using MSAL Python.For more information about how th eprotocols work in this scenario and other scenarios, see [Authentication Scenarios for Azure AD](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-authentication-scenarios).
+This sample shows how to build a Python web app that uses OAuth2 to get access to Microsoft Graph using MSAL Python. For more information about how th eprotocols work in this scenario and other scenarios, see [Authentication Scenarios for Azure AD](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-authentication-scenarios).
 
 ## How to run this sample
 
 To run this sample, you'll need:
 
 > To run this sample you will need: 
-> - An internet connection.
 > - [Python 2.7+](https://www.python.org/downloads/release/python-2713/) or [Python 3+](https://www.python.org/downloads/release/python-364/)
 > - [Flask](http://flask.pocoo.org/), [Flask-Session](https://pythonhosted.org/Flask-Session/), [requests](https://2.python-requests.org/en/master/)
 > - [MSAL Python](https://github.com/AzureAD/microsoft-authentication-library-for-python) 
@@ -43,12 +42,12 @@ To run this sample, you'll need:
 From your shell or command line:
 
 ```Shell
-git clone https://github.com/Azure-Samples/https://github.com/Azure-Samples/ms-identity-python-webapp.git
+git clone https://github.com/Azure-Samples/ms-identity-python-webapp.git
 ```
 
 or download and extract the repository .zip file.
 
-> Given that the name of the sample is quiet long, and so are the names of the referenced NuGet packages, you might want to clone it in a folder close to the root of your hard drive, to avoid file size limitations on Windows.
+> Given that the name of the sample is quiet long, you might want to clone it in a folder close to the root of your hard drive, to avoid file size limitations on Windows.
 
 ### Step 2:  Register the sample application with your Azure Active Directory tenant
 
@@ -123,9 +122,9 @@ In the steps below, "ClientID" is the same as "Application ID" or "AppId".
 > Note: if you used the setup scripts, the changes below will have been applied for you
 
 1. Open the `app_config.py` file
-1. Find the app key `tenant-name` and replace the existing value with your Azure AD tenant name.
-1. Find the app key `client-secret-obtained-during-app-registration` and replace the existing value with the key you saved during the creation of the `python-webapp` app, in the Azure portal.
-1. Find the app key `client-id-as-obtained-during-app-registration` and replace the existing value with the application ID (clientId) of the `python-webapp` application copied from the Azure portal.
+1. Find the app key `Enter_the_Tenant_Name_Here` and replace the existing value with your Azure AD tenant name.
+1. Find the app key `Enter_the_Client_Secret_Here` and replace the existing value with the key you saved during the creation of the `python-webapp` app, in the Azure portal.
+1. Find the app key `Enter_the_Application_Id_here` and replace the existing value with the application ID (clientId) of the `python-webapp` application copied from the Azure portal.
 
 
 ### Step 4: Run the sample
@@ -170,7 +169,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 
 ## More information
 
-For more information, see MSAL.Python's [conceptual documentation]("https://msal-python.readthedocs.io/en/latest/"):
+For more information, see MSAL.Python's [conceptual documentation]("https://github.com/AzureAD/microsoft-authentication-library-for-python/wiki"):
 
 
 For more information about web apps scenarios on the Microsoft identity platform see [Scenario: Web app that calls web APIs](https://docs.microsoft.com/en-us/azure/active-directory/develop/scenario-web-app-call-api-overview)
