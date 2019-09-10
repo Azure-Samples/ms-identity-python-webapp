@@ -1,4 +1,7 @@
 ---
+page_type: sample
+languages: python
+product: azure-active-directory
 services: active-directory
 platforms: python
 author: abpati
