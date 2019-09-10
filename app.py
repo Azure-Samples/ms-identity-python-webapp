@@ -1,7 +1,7 @@
 import uuid
 import flask
 import requests
-from flask import Flask, render_template, session, request
+from flask import Flask, render_template, session, request, url_for
 from flask_session import Session
 import msal
 import app_config
@@ -10,7 +10,6 @@ sess = Session()
 app = Flask(__name__)
 app.config.from_object('config.Config')
 sess.init_app(app)
-
 cache = msal.SerializableTokenCache()
 application = msal.ConfidentialClientApplication(
     app_config.CLIENT_ID, authority=app_config.AUTHORITY,
@@ -23,13 +22,53 @@ def set_cache():
         session[request.cookies.get("session")] = cache.serialize()
 
 
+def check_cache():
+    # Checking token cache for accounts
+    result = None
+    accounts = application.get_accounts()
+
+    # Trying to acquire token silently
+    if accounts:
+        result = application.acquire_token_silent(app_config.SCOPE, account=accounts[0])
+    return result
+
+
+def get_graph_info(result):
+    if 'access_token' not in result:
+        return flask.redirect(flask.url_for('index'))
+    endpoint = 'https://graph.microsoft.com/v1.0/me/'
+    http_headers = {'Authorization': 'Bearer ' + result['access_token'],
+                    'User-Agent': 'msal-python-sample',
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'client-request-id': str(uuid.uuid4())}
+    graph_data = requests.get(endpoint, headers=http_headers, stream=False).json()
+    return graph_data
+
+
 @app.route('/')
 def index():
+    return render_template("index.html")
+
+
+@app.route('/processing')
+def processing():
     # Initializing
-    if (session.get(request.cookies.get("session"), '')) == '':
+    is_session = session.get(request.cookies.get("session"))
+    if is_session is None:
         session[request.cookies.get("session")] = ''
     cache.deserialize(session.get(request.cookies.get("session")))
-    return render_template("index.html")
+    return flask.redirect(url_for('my_info'))
+
+
+@app.route('/my_info')
+def my_info():
+    result = check_cache()
+    if result:
+        graph_result = get_graph_info(result)
+        return flask.render_template('display.html', auth_result=graph_result, cond="logout")
+    else:
+        return flask.render_template('display.html', auth_result="You are not signed in", cond="")
 
 
 @app.route('/authenticate')
@@ -51,32 +90,14 @@ def main_logic():
     # Raising error if state does not match
     if state != session[(request.cookies.get("session")+'state')]:
         raise ValueError("State does not match")
-    result = None
-    # Checking token cache for accounts
-    accounts = application.get_accounts()
-
-    # Trying to acquire token silently
-    if accounts:
-        result = application.acquire_token_silent(app_config.SCOPE, account=accounts[0])
-
-    # If silent call fails, fallback to acquireToken interactive call
-    if not result:
-        result = application.acquire_token_by_authorization_code(code, scopes=app_config.SCOPE,
-                                                                 redirect_uri=app_config.REDIRECT_URI)
+    result = application.acquire_token_by_authorization_code(code, scopes=app_config.SCOPE,
+                                                             redirect_uri=app_config.REDIRECT_URI)
     # Updating cache
     set_cache()
 
     # Using access token from result to call Microsoft Graph
-    if 'access_token' not in result:
-        return flask.redirect(flask.url_for('index'))
-    endpoint = 'https://graph.microsoft.com/v1.0/me/'
-    http_headers = {'Authorization': 'Bearer ' + result['access_token'],
-                    'User-Agent': 'msal-python-sample',
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'client-request-id': str(uuid.uuid4())}
-    graph_data = requests.get(endpoint, headers=http_headers, stream=False).json()
-    return flask.render_template('display.html', auth_result=graph_data)
+    graph_data = get_graph_info(result)
+    return flask.render_template('display.html', auth_result=graph_data, cond="logout")
 
 
 @app.route("/logout")

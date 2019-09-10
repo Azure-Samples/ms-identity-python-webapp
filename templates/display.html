@@ -5,17 +5,24 @@
     <title>Acquire Token Result </title>
 </head>
 <body>
-<p1><b>Your information</b> </p1>
-<table>
-{% for key, value in auth_result.items() %}
-   <tr>
-        <th> {{ key }} </th>
-        <td> {{ value }} </td>
-   </tr>
-{% endfor %}
-</table>
-<form action="/logout" >
-    <input type="submit" value=" Logout"/>
-</form>
+    {% if cond  %}
+        <p1><b>Your information</b> </p1>
+        <table>
+        {% for key, value in auth_result.items() %}
+           <tr>
+                <th> {{ key }} </th>
+                <td> {{ value }} </td>
+           </tr>
+        {% endfor %}
+        </table>
+        <form action="/logout" >
+            <input type="submit" value=" Logout"/>
+        </form>
+    {% else %}
+        <p1><b> {{auth_result}} </b> </p1>
+        <form action="/authenticate" >
+            <input type="submit" value=" Sign-in"/>
+        </form>
+    {% endif %}
 </body>
 </html>
