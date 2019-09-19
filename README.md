@@ -18,7 +18,7 @@ endpoint: Microsoft Identity platform (formerly Azure AD v2.0)
 
 ### Overview
 
-This sample demonstrates a Python web application that signs-in users with the Microsoft identity platform and calls the Microsoft Graph 
+This sample demonstrates a Python web application that signs-in users with the Microsoft identity platform and calls the Microsoft Graph.
 
 1. The python web application uses the Microsoft Authentication Library (MSAL) to obtain a JWT access token from the Microsoft identity platform (formerly Azure AD v2.0):
 2. The access token is used as a bearer token to authenticate the user when calling the Microsoft Graph.
@@ -27,16 +27,18 @@ This sample demonstrates a Python web application that signs-in users with the M
 
 ### Scenario
 
-This sample shows how to build a Python web app that uses OAuth2 to get access to Microsoft Graph using MSAL Python. For more information about how th eprotocols work in this scenario and other scenarios, see [Authentication Scenarios for Azure AD](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-authentication-scenarios).
+This sample shows how to build a Python web app using Flask and MSAL Python,
+that signs in a user, and get access to Microsoft Graph.
+For more information about how the protocols work in this scenario and other scenarios,
+see [Authentication Scenarios for Azure AD](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-authentication-scenarios).
 
 ## How to run this sample
 
 To run this sample, you'll need:
 
-> To run this sample you will need: 
 > - [Python 2.7+](https://www.python.org/downloads/release/python-2713/) or [Python 3+](https://www.python.org/downloads/release/python-364/)
 > - [Flask](http://flask.pocoo.org/), [Flask-Session](https://pythonhosted.org/Flask-Session/), [requests](https://2.python-requests.org/en/master/)
-> - [MSAL Python](https://github.com/AzureAD/microsoft-authentication-library-for-python) 
+> - [MSAL Python](https://github.com/AzureAD/microsoft-authentication-library-for-python)
 > - An Azure Active Directory (Azure AD) tenant. For more information on how to get an Azure AD tenant, see [how to get an Azure AD tenant.](https://docs.microsoft.com/azure/active-directory/develop/quickstart-create-new-tenant)
 
 
@@ -50,7 +52,7 @@ git clone https://github.com/Azure-Samples/ms-identity-python-webapp.git
 
 or download and extract the repository .zip file.
 
-> Given that the name of the sample is quiet long, you might want to clone it in a folder close to the root of your hard drive, to avoid file size limitations on Windows.
+> Given that the name of the sample is quite long, you might want to clone it in a folder close to the root of your hard drive, to avoid file name lenghth limitations when running on Windows.
 
 ### Step 2:  Register the sample application with your Azure Active Directory tenant
 
@@ -122,22 +124,20 @@ In the steps below, "ClientID" is the same as "Application ID" or "AppId".
 
 #### Configure the pythonwebapp project
 
-> Note: if you used the setup scripts, the changes below will have been applied for you
+> Note: if you used the setup scripts, the changes below may have been applied for you
 
 1. Open the `app_config.py` file
 1. Find the app key `Enter_the_Tenant_Name_Here` and replace the existing value with your Azure AD tenant name.
-1. Find the app key `Enter_the_Client_Secret_Here` and replace the existing value with the key you saved during the creation of the `python-webapp` app, in the Azure portal.
+1. You could find the app key `Enter_the_Client_Secret_Here` and replace the existing value with the key you saved during the creation of the `python-webapp` app, in the Azure portal.
+   But we recommend you to store the secret in environment variable, rather than in file.
 1. Find the app key `Enter_the_Application_Id_here` and replace the existing value with the application ID (clientId) of the `python-webapp` application copied from the Azure portal.
 
 
 ### Step 4: Run the sample
 
-- You will need to install MSAL Python library, Flask framework, Flask-Sessions for server side session management and requests using pip as follows:
+- You will need to install dependencies using pip as follows:
 ```Shell
-$ pip install msal
-$ pip install flask
-$ pip install Flask-Session
-$ pip install requests
+$ pip install -r requirements.txt
 ```
 - If the environment variable for Flask is already set:
 

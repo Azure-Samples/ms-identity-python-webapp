@@ -2,27 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Acquire Token Result </title>
 </head>
 <body>
-    {% if cond  %}
-        <p1><b>Your information</b> </p1>
-        <table>
-        {% for key, value in auth_result.items() %}
-           <tr>
-                <th> {{ key }} </th>
-                <td> {{ value }} </td>
-           </tr>
-        {% endfor %}
-        </table>
-        <form action="/logout" >
-            <input type="submit" value=" Logout"/>
-        </form>
-    {% else %}
-        <p1><b> {{auth_result}} </b> </p1>
-        <form action="/authenticate" >
-            <input type="submit" value=" Sign-in"/>
-        </form>
-    {% endif %}
+    <h1>Graph API Call Result</h1>
+    <pre>{{ result |tojson(indent=4) }}</pre> <!-- Just a generic json viewer -->
+    <a href="javascript:window.history.go(-1)">Back</a>
 </body>
 </html>
+

@@ -1,5 +1,21 @@
-AUTHORITY = "https://login.microsoftonline.com/Enter_the_Tenant_Name_Here"
+import os
+
+# This pattern is defined in Flask's documentation here
+# https://flask.palletsprojects.com/en/1.1.x/config/#configuring-from-environment-variables
+CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+if not CLIENT_SECRET:
+    raise ValueError("Need to define CLIENT_SECRET environment variable")
+
+AUTHORITY = "https://login.microsoftonline.com/common"  # For multi-tenant app
+# AUTHORITY = "https://login.microsoftonline.com/Enter_the_Tenant_Name_Here"
+
 CLIENT_ID = "Enter_the_Application_Id_here"
-CLIENT_SECRET = "Enter_the_Client_Secret_Here"
-SCOPE = ["https://graph.microsoft.com/User.Read"]
-REDIRECT_URI = "http://localhost:5000/getAToken"
+
+# You can find more Microsoft Graph API endpoints from Graph Explorer
+# https://developer.microsoft.com/en-us/graph/graph-explorer
+ENDPOINT = 'https://graph.microsoft.com/v1.0/me/calendars'
+
+# You can find the proper permission names from this document to form a scope
+# https://docs.microsoft.com/en-us/graph/permissions-reference
+SCOPE = ["https://graph.microsoft.com/Calendars.Read"]
+
