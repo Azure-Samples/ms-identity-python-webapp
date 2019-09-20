@@ -139,19 +139,10 @@ In the steps below, "ClientID" is the same as "Application ID" or "AppId".
 ```Shell
 $ pip install -r requirements.txt
 ```
-- If the environment variable for Flask is already set:
 
 Run app.py from shell or command line:
 ```Shell
 $ python app.py
-```
-- If the environment variable for Flask is not set:
-
-Type the following commands on shell or command line by navigating to the project directory:
-```Shell
-$ export FLASK_APP=app.py
-$ export FLASK_DEBUG=1
-$ flask run
 ```
 
 ## Community Help and Support
