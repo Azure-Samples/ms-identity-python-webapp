@@ -52,7 +52,7 @@ git clone https://github.com/Azure-Samples/ms-identity-python-webapp.git
 
 or download and extract the repository .zip file.
 
-> Given that the name of the sample is quite long, you might want to clone it in a folder close to the root of your hard drive, to avoid file name lenghth limitations when running on Windows.
+> Given that the name of the sample is quite long, you might want to clone it in a folder close to the root of your hard drive, to avoid file name length limitations when running on Windows.
 
 ### Step 2:  Register the sample application with your Azure Active Directory tenant
 
