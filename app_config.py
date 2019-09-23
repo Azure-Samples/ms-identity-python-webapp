@@ -19,3 +19,5 @@ ENDPOINT = 'https://graph.microsoft.com/v1.0/me/calendars'
 # https://docs.microsoft.com/en-us/graph/permissions-reference
 SCOPE = ["https://graph.microsoft.com/Calendars.Read"]
 
+SESSION_TYPE = "filesystem"  # So token cache will be stored in server-side session
+

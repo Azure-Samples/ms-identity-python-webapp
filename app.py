@@ -7,7 +7,7 @@ import app_config
 
 
 app = Flask(__name__)
-app.config["SESSION_TYPE"] = "filesystem"  # We choose to store tokens in server-side session
+app.config.from_object(app_config)
 Session(app)
 
 
