@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
 </head>
 <body>
-<form action="/processing" >
-    <input type="submit" value="Get my information from graph"/>
-</form>
+    <h1>Microsoft Identity Python Web App</h1>
+    Welcome {{ user.get("name") }}!
+    <li><a href='/graphcall'>Call Microsoft Graph API</a></li>
+    <li><a href="/logout">Logout</a></li>
 </body>
 </html>
+

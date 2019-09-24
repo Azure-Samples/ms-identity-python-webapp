@@ -1,113 +1,92 @@
 import uuid
-import flask
 import requests
-from flask import Flask, render_template, session, request
-from flask_session import Session
+from flask import Flask, render_template, session, request, redirect, url_for
+from flask_session import Session  # https://pythonhosted.org/Flask-Session
 import msal
 import app_config
 
-sess = Session()
+
 app = Flask(__name__)
-app.config.from_object('config.Config')
-sess.init_app(app)
-cache = msal.SerializableTokenCache()
-application = msal.ConfidentialClientApplication(
-    app_config.CLIENT_ID, authority=app_config.AUTHORITY,
-    client_credential=app_config.CLIENT_SECRET,
-    token_cache=cache)
+app.config.from_object(app_config)
+Session(app)
 
 
-def set_cache():
-    if cache.has_state_changed:
-        session[request.cookies.get("session")] = cache.serialize()
-
-
-def check_cache():
-    # Checking token cache for accounts
-    result = None
-    accounts = application.get_accounts()
-
-    # Trying to acquire token silently
-    if accounts:
-        result = application.acquire_token_silent(app_config.SCOPE, account=accounts[0])
-    return result
-
-
-def get_graph_info(result):
-    if 'access_token' not in result:
-        return flask.redirect(flask.url_for('index'))
-    endpoint = 'https://graph.microsoft.com/v1.0/me/'
-    http_headers = {'Authorization': 'Bearer ' + result['access_token'],
-                    'User-Agent': 'msal-python-sample',
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'client-request-id': str(uuid.uuid4())}
-    graph_data = requests.get(endpoint, headers=http_headers, stream=False).json()
-    return graph_data
-
-
-@app.route('/')
+@app.route("/")
 def index():
-    return render_template("index.html")
+    if not session.get("user"):
+        return redirect(url_for("login"))
+    return render_template('index.html', user=session["user"])
 
+@app.route("/login")
+def login():
+    session["state"] = str(uuid.uuid4())
+    auth_url = _build_msal_app().get_authorization_request_url(
+        app_config.SCOPE,  # Technically we can use empty list [] to just sign in,
+                           # here we choose to also collect end user consent upfront
+        state=session["state"],
+        redirect_uri=url_for("authorized", _external=True))
+    return "<a href='%s'>Login with Microsoft Identity</a>" % auth_url
 
-@app.route('/processing')
-def processing():
-    # Initializing
-    is_session = session.get(request.cookies.get("session"))
-    if is_session is None:
-        session[request.cookies.get("session")] = ''
-    cache.deserialize(session.get(request.cookies.get("session")))
-    return flask.redirect(flask.url_for('my_info'))
-
-
-@app.route('/my_info')
-def my_info():
-    result = check_cache()
-    if result:
-        graph_result = get_graph_info(result)
-        return flask.render_template('display.html', auth_result=graph_result, cond="logout")
-    else:
-        return flask.render_template('display.html', auth_result="You are not signed in", cond="")
-
-
-@app.route('/authenticate')
-def authenticate():
-    # Call to the authorize endpoint
-    auth_state = str(uuid.uuid4())
-    session[(request.cookies.get("session")+'state')] = auth_state
-    authorization_url = application.get_authorization_request_url(app_config.SCOPE, state=auth_state,
-                                                                  redirect_uri=app_config.REDIRECT_URI)
-    resp = flask.Response(status=307)
-    resp.headers['location'] = authorization_url
-    return resp
-
-
-@app.route("/getAToken")
-def main_logic():
-    code = flask.request.args['code']
-    state = flask.request.args['state']
-    # Raising error if state does not match
-    if state != session[(request.cookies.get("session")+'state')]:
-        raise ValueError("State does not match")
-    result = application.acquire_token_by_authorization_code(code, scopes=app_config.SCOPE,
-                                                             redirect_uri=app_config.REDIRECT_URI)
-    # Updating cache
-    set_cache()
-
-    # Using access token from result to call Microsoft Graph
-    graph_data = get_graph_info(result)
-    return flask.render_template('display.html', auth_result=graph_data, cond="logout")
-
+@app.route("/getAToken")  # Its absolute URL must match your app's redirect_uri set in AAD
+def authorized():
+    if request.args['state'] != session.get("state"):
+        return redirect(url_for("login"))
+    cache = _load_cache()
+    result = _build_msal_app(cache).acquire_token_by_authorization_code(
+        request.args['code'],
+        scopes=app_config.SCOPE,  # Misspelled scope would cause an HTTP 400 error here
+        redirect_uri=url_for("authorized", _external=True))
+    if "error" in result:
+        return "Login failure: %s, %s" % (
+            result["error"], result.get("error_description"))
+    session["user"] = result.get("id_token_claims")
+    _save_cache(cache)
+    return redirect(url_for("index"))
 
 @app.route("/logout")
 def logout():
-    # Logout
-    accounts = application.get_accounts()
-    application.remove_account(accounts[0])
-    set_cache()
-    return flask.redirect(flask.url_for('index'))
+    session["user"] = None  # Log out from this app from its session
+    # session.clear()  # If you prefer, this would nuke the user's token cache too
+    return redirect(  # Also need to logout from Microsoft Identity platform
+        "https://login.microsoftonline.com/common/oauth2/v2.0/logout"
+        "?post_logout_redirect_uri=" + url_for("index", _external=True))
 
+@app.route("/graphcall")
+def graphcall():
+    token = _get_token_from_cache(app_config.SCOPE)
+    if not token:
+        return redirect(url_for("login"))
+    graph_data = requests.get(  # Use token to call downstream service
+        app_config.ENDPOINT,
+        headers={'Authorization': 'Bearer ' + token['access_token']},
+        ).json()
+    return render_template('display.html', result=graph_data)
+
+
+def _load_cache():
+    cache = msal.SerializableTokenCache()
+    if session.get("token_cache"):
+        cache.deserialize(session["token_cache"])
+    return cache
+
+def _save_cache(cache):
+    if cache.has_state_changed:
+        session["token_cache"] = cache.serialize()
+
+def _build_msal_app(cache=None):
+    return msal.ConfidentialClientApplication(
+        app_config.CLIENT_ID, authority=app_config.AUTHORITY,
+        client_credential=app_config.CLIENT_SECRET, token_cache=cache)
+
+def _get_token_from_cache(scope=None):
+    cache = _load_cache()  # This web app maintains one cache per session
+    cca = _build_msal_app(cache)
+    accounts = cca.get_accounts()
+    if accounts:  # So all account(s) belong to the current signed-in user
+        result = cca.acquire_token_silent(scope, account=accounts[0])
+        _save_cache(cache)
+        return result
 
 if __name__ == "__main__":
     app.run()
+
