@@ -15,11 +15,11 @@ CLIENT_ID = "Enter_the_Application_Id_here"
 
 # You can find more Microsoft Graph API endpoints from Graph Explorer
 # https://developer.microsoft.com/en-us/graph/graph-explorer
-ENDPOINT = 'https://graph.microsoft.com/v1.0/me/calendars'
+ENDPOINT = 'https://graph.microsoft.com/v1.0/users'  # This resource requires no admin consent
 
 # You can find the proper permission names from this document to form a scope
 # https://docs.microsoft.com/en-us/graph/permissions-reference
-SCOPE = ["https://graph.microsoft.com/Calendars.Read"]
+SCOPE = ["https://graph.microsoft.com/User.ReadBasic.All"]
 
 SESSION_TYPE = "filesystem"  # So token cache will be stored in server-side session
 
