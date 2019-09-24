@@ -1,14 +1,13 @@
 ---
 page_type: sample
-languages: python
-product: azure-active-directory
-services: active-directory
-platforms: python
-author: abpati
-level: 300
-client: Python Web Application
-service: Microsoft Graph
-endpoint: Microsoft Identity platform (formerly Azure AD v2.0)
+languages:
+- python
+- powershell
+- html
+products:
+- azure-active-directory
+description: "This sample demonstrates a Java web application calling a Microsoft Graph that is secured using Azure Active Directory."
+urlFragment: ms-identity-python-webapp
 ---
 # Integrating Microsoft Identity Platform with a Python web application
 
