@@ -15,10 +15,7 @@ Session(app)
 def index():
     if not session.get("user"):
         return redirect(url_for("login"))
-    return """Welcome, %s.
-        <li><a href='/graphcall'>Call Microsoft Graph API</a></li>
-        <li><a href="/logout">Logout</a></li>
-        """ % session["user"].get("name")
+    return render_template('index.html', user=session["user"])
 
 @app.route("/login")
 def login():
@@ -48,7 +45,7 @@ def authorized():
 
 @app.route("/logout")
 def logout():
-    session["user"] = None  # Mark current session as not-logged-in
+    session["user"] = None  # Log out from this app from its session
     # session.clear()  # If you prefer, this would nuke the user's token cache too
     return redirect(  # Also need to logout from Microsoft Identity platform
         "https://login.microsoftonline.com/common/oauth2/v2.0/logout"
