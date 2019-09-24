@@ -37,8 +37,6 @@ see [Authentication Scenarios for Azure AD](https://docs.microsoft.com/en-us/azu
 To run this sample, you'll need:
 
 > - [Python 2.7+](https://www.python.org/downloads/release/python-2713/) or [Python 3+](https://www.python.org/downloads/release/python-364/)
-> - [Flask](http://flask.pocoo.org/), [Flask-Session](https://pythonhosted.org/Flask-Session/), [requests](https://2.python-requests.org/en/master/)
-> - [MSAL Python](https://github.com/AzureAD/microsoft-authentication-library-for-python)
 > - An Azure Active Directory (Azure AD) tenant. For more information on how to get an Azure AD tenant, see [how to get an Azure AD tenant.](https://docs.microsoft.com/azure/active-directory/develop/quickstart-create-new-tenant)
 
 
