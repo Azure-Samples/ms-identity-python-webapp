@@ -128,7 +128,7 @@ In the steps below, "ClientID" is the same as "Application ID" or "AppId".
 1. Find the app key `Enter_the_Tenant_Name_Here` and replace the existing value with your Azure AD tenant name.
 1. You saved your application secret during the creation of the `python-webapp` app in the Azure portal.
    Now you can set the secret in environment variable `CLIENT_SECRET`,
-   which will then be picked up by this sample app.
+   and then adjust `app_config.py` to pick it up.
 1. Find the app key `Enter_the_Application_Id_here` and replace the existing value with the application ID (clientId) of the `python-webapp` application copied from the Azure portal.
 
 
