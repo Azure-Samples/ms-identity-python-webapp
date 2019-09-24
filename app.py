@@ -50,7 +50,9 @@ def authorized():
 def logout():
     session["user"] = None  # Mark current session as not-logged-in
     # session.clear()  # If you prefer, this would nuke the user's token cache too
-    return redirect(url_for("index"))
+    return redirect(  # Also need to logout from Microsoft Identity platform
+        "https://login.microsoftonline.com/common/oauth2/v2.0/logout"
+        "?post_logout_redirect_uri=" + url_for("index", _external=True))
 
 @app.route("/graphcall")
 def graphcall():
