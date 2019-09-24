@@ -1,10 +1,12 @@
 import os
 
-# This pattern is defined in Flask's documentation here
+CLIENT_SECRET = "Enter_the_Client_Secret_Here" # Our Quickstart uses this placeholder
+# In your production app, we recommend you to use other ways to store your secret,
+# such as KeyVault, or environment variable as described in Flask's documentation here
 # https://flask.palletsprojects.com/en/1.1.x/config/#configuring-from-environment-variables
-CLIENT_SECRET = os.getenv("CLIENT_SECRET")
-if not CLIENT_SECRET:
-    raise ValueError("Need to define CLIENT_SECRET environment variable")
+# CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+# if not CLIENT_SECRET:
+#     raise ValueError("Need to define CLIENT_SECRET environment variable")
 
 AUTHORITY = "https://login.microsoftonline.com/common"  # For multi-tenant app
 # AUTHORITY = "https://login.microsoftonline.com/Enter_the_Tenant_Name_Here"
