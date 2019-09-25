@@ -15,7 +15,7 @@ Session(app)
 def index():
     if not session.get("user"):
         return redirect(url_for("login"))
-    return render_template('index.html', user=session["user"])
+    return render_template('index.html', user=session["user"], version=msal.__version__)
 
 @app.route("/login")
 def login():
