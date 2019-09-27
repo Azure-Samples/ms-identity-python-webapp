@@ -45,8 +45,7 @@ def authorized():
 
 @app.route("/logout")
 def logout():
-    session["user"] = None  # Log out from this app from its session
-    # session.clear()  # If you prefer, this would nuke the user's token cache too
+    session.clear()  # Wipe out user and its token cache from session
     return redirect(  # Also need to logout from Microsoft Identity platform
         "https://login.microsoftonline.com/common/oauth2/v2.0/logout"
         "?post_logout_redirect_uri=" + url_for("index", _external=True))
