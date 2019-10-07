@@ -27,7 +27,7 @@ def login():
         redirect_uri=url_for("authorized", _external=True))
     return "<a href='%s'>Login with Microsoft Identity</a>" % auth_url
 
-@app.route("/getAToken")  # Its absolute URL must match your app's redirect_uri set in AAD
+@app.route(app_config.REDIRECT_PATH)  # Its absolute URL must match your app's redirect_uri set in AAD
 def authorized():
     if request.args['state'] != session.get("state"):
         return redirect(url_for("login"))
