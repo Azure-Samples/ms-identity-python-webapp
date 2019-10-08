@@ -49,6 +49,14 @@ def logout():
         app_config.AUTHORITY + "/oauth2/v2.0/logout" +
         "?post_logout_redirect_uri=" + url_for("index", _external=True))
 
+# This page is only used in B2C scenario
+@app.route("/profile")
+def profile():
+    app = _build_msal_app(authority=app_config.B2C_PROFILE_AUTHORITY)
+    return redirect(app.get_authorization_request_url([],
+        state=str(uuid.uuid4()),
+        redirect_uri=url_for("authorized", _external=True)))
+
 @app.route("/graphcall")
 def graphcall():
     token = _get_token_from_cache(app_config.SCOPE)
@@ -71,9 +79,9 @@ def _save_cache(cache):
     if cache.has_state_changed:
         session["token_cache"] = cache.serialize()
 
-def _build_msal_app(cache=None):
+def _build_msal_app(cache=None, authority=None):
     return msal.ConfidentialClientApplication(
-        app_config.CLIENT_ID, authority=app_config.AUTHORITY,
+        app_config.CLIENT_ID, authority=authority or app_config.AUTHORITY,
         client_credential=app_config.CLIENT_SECRET, token_cache=cache)
 
 def _get_token_from_cache(scope=None):
