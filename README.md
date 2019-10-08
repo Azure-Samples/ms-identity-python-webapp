@@ -138,9 +138,9 @@ In the steps below, "ClientID" is the same as "Application ID" or "AppId".
 $ pip install -r requirements.txt
 ```
 
-Run app.py from shell or command line:
+Run app.py from shell or command line. Note that the port needs to match what you've set up in your redirect_uri:
 ```Shell
-$ python app.py
+$ flask run --port 5000
 ```
 
 ## Community Help and Support
