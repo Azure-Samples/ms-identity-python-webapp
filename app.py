@@ -29,18 +29,17 @@ def login():
 
 @app.route(app_config.REDIRECT_PATH)  # Its absolute URL must match your app's redirect_uri set in AAD
 def authorized():
-    if request.args['state'] != session.get("state"):
-        return redirect(url_for("login"))
-    cache = _load_cache()
-    result = _build_msal_app(cache=cache).acquire_token_by_authorization_code(
-        request.args['code'],
-        scopes=app_config.SCOPE,  # Misspelled scope would cause an HTTP 400 error here
-        redirect_uri=url_for("authorized", _external=True))
-    if "error" in result:
-        return "Login failure: %s, %s" % (
-            result["error"], result.get("error_description"))
-    session["user"] = result.get("id_token_claims")
-    _save_cache(cache)
+    if request.args.get('state') == session.get("state"):
+        cache = _load_cache()
+        result = _build_msal_app(cache=cache).acquire_token_by_authorization_code(
+            request.args['code'],
+            scopes=app_config.SCOPE,  # Misspelled scope would cause an HTTP 400 error here
+            redirect_uri=url_for("authorized", _external=True))
+        if "error" in result:
+            return "Login failure: %s, %s" % (
+                result["error"], result.get("error_description"))
+        session["user"] = result.get("id_token_claims")
+        _save_cache(cache)
     return redirect(url_for("index"))
 
 @app.route("/logout")
