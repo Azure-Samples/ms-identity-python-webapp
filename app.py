@@ -46,8 +46,8 @@ def authorized():
 @app.route("/logout")
 def logout():
     session.clear()  # Wipe out user and its token cache from session
-    return redirect(  # Also need to logout from Microsoft Identity platform
-        "https://login.microsoftonline.com/common/oauth2/v2.0/logout"
+    return redirect(  # Also logout from your tenant's web session
+        app_config.AUTHORITY + "/oauth2/v2.0/logout" +
         "?post_logout_redirect_uri=" + url_for("index", _external=True))
 
 @app.route("/graphcall")
