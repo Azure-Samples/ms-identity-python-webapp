@@ -13,6 +13,9 @@ AUTHORITY = "https://login.microsoftonline.com/common"  # For multi-tenant app
 
 CLIENT_ID = "Enter_the_Application_Id_here"
 
+REDIRECT_PATH = "/getAToken"  # It will be used to form an absolute URL
+    # And that absolute URL must match your app's redirect_uri set in AAD
+
 # You can find more Microsoft Graph API endpoints from Graph Explorer
 # https://developer.microsoft.com/en-us/graph/graph-explorer
 ENDPOINT = 'https://graph.microsoft.com/v1.0/users'  # This resource requires no admin consent
