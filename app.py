@@ -32,7 +32,7 @@ def authorized():
     if request.args['state'] != session.get("state"):
         return redirect(url_for("login"))
     cache = _load_cache()
-    result = _build_msal_app(cache).acquire_token_by_authorization_code(
+    result = _build_msal_app(cache=cache).acquire_token_by_authorization_code(
         request.args['code'],
         scopes=app_config.SCOPE,  # Misspelled scope would cause an HTTP 400 error here
         redirect_uri=url_for("authorized", _external=True))
@@ -79,7 +79,7 @@ def _build_msal_app(cache=None):
 
 def _get_token_from_cache(scope=None):
     cache = _load_cache()  # This web app maintains one cache per session
-    cca = _build_msal_app(cache)
+    cca = _build_msal_app(cache=cache)
     accounts = cca.get_accounts()
     if accounts:  # So all account(s) belong to the current signed-in user
         result = cca.acquire_token_silent(scope, account=accounts[0])
