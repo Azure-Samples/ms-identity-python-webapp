@@ -50,6 +50,50 @@ def logout():
         app_config.AUTHORITY + "/oauth2/v2.0/logout" +
         "?post_logout_redirect_uri=" + url_for("index", _external=True))
 
+@app.route("/profile")
+def profile():  # Only used in B2C scenario.
+    # If we would choose to have an explicit profile() controller here,
+    # it would look like this. But we chose not to. Regardless,
+    # the caveats below are still meaningful to help you (the repo maintainer)
+    # to better understand what is going on under the hood.
+
+    # We could also implement a ResetPassword page. The caveats below still apply.
+
+    # Since each B2C policy could be a new issuer,
+    # here we create a new one-time MSAL app instance.
+    # If we reuse a global MSAL app, the returned tokens (if any) would be
+    # stored in the main MSAL app's token cache, which we don't want to happen.
+    app = _build_msal_app(authority=app_config.B2C_PROFILE_AUTHORITY)
+
+    # EditProfile in B2C is done by calling the authorize_endpoint
+    return redirect(app.get_authorization_request_url(
+
+        # We usually don't need a new access token,
+        # but we still have to provide an empty scope as a placeholder
+        [],
+
+        # Because we are preparing an authorize request, we need to specify a redirect_uri.
+        # The next line does exactly that. But don't let its seemingly simpleness fool you.
+        # Since different policy could represent different trust boundary,
+        # it might make sense to register multiple redirect_uri, one per policy.
+        # But in reality, admin might not realize that,
+        # so there might be only one redirect_uri registered for this app.
+        # Here in this sample, we choose to reuse that same redirect_uri
+        # which was already used by the default SignIn policy,
+        # but then later when we received the redirected-back HTTP request,
+        # we would need a way to figure out that the request was triggered by
+        # a different policy, therefore any returned tokens (if any) should NOT
+        # go into the token cache of the main MSAL instance with SignIn policy.
+        redirect_uri=url_for("authorized", _external=True),
+
+        # Or, alternatively, here we did it in a hacky way.
+        # We create a new random state for this new EditProfile authorize request,
+        # but we purposely do NOT record that state in this session. Therefore,
+        # when that redirect_uri is triggered, it would be automatically ignored
+        # due to mismatching state. We know this is almost an anti-pattern hack.
+        state=str(uuid.uuid4()),
+        ))
+
 @app.route("/graphcall")
 def graphcall():
     token = _get_token_from_cache(app_config.SCOPE)
