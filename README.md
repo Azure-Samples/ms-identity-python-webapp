@@ -4,7 +4,7 @@ languages:
 - python
 products:
 - azure-active-directory
-description: "This sample demonstrates a Java web application calling a Microsoft Graph that is secured using Azure Active Directory."
+description: "This sample demonstrates a Python web application calling a Microsoft Graph that is secured using Azure Active Directory."
 urlFragment: ms-identity-python-webapp
 ---
 # Integrating Microsoft Identity Platform with a Python web application
