@@ -47,23 +47,13 @@ This sample demonstrates a Python web application that signs-in users with the M
 
 ## Update the application
 
-In the tutorial that you completed as part of the prerequisites, you added a web application in Azure AD B2C.
-To enable communication with the sample in this tutorial, you need to add a redirect URI to the application in Azure AD B2C.
+In the tutorial that you completed as part of [the prerequisites, you added a web application in Azure AD B2C](https://docs.microsoft.com/en-us/azure/active-directory-b2c/tutorial-register-applications).
+To enable communication with the sample in this tutorial, you need to add a redirect URI to that application in Azure AD B2C.
 
-1. Sign in to the [Azure portal](https://portal.azure.com/).
-1. Make sure you're using the directory that contains your Azure AD B2C tenant by selecting the **Directory + subscription** filter in the top menu and choosing the directory that contains your tenant.
-1. Choose **All services** in the top-left corner of the Azure portal, and then search for and select **Azure AD B2C**.
-1. Select **Applications**, and then select the *webapp1* application.
-1. Under **Reply URL**, add something like `http://localhost:5000/getAToken`.
-
-   > Just remember, when setting up **Reply URL**, also give it a path,
-   > so that it would look something like `https//your_domain.com:5000/getAToken`.
-   > You could use any port or any path.
-   > Later we will set this sample to match what you register here.
-
-1. Select **Save**.
-1. On the properties page, record the application ID that you'll use when you configure the web application.
-1. Select **Keys**, select **Generate key**, and select **Save**. Record the key that you'll use when you configure the web application.
+* Modify the **Reply URL**, add something like `http://localhost:5000/getAToken` or `https//your_domain.com:5000/getAToken`.
+  You could use any port or any path. Later we will set this sample to match what you register here.
+* On the properties page, record the application ID that you'll use when you configure the web application.
+* Also generate a key for your web application. Record the key that you'll use when you configure this sample.
 
 
 ## Configure the sample
@@ -114,7 +104,7 @@ In the steps below, "ClientID" is the same as "Application ID" or "AppId".
 
 ## Enable authentication
 
-Run app.py from shell or command line. Note that the port needs to match what you've set up in your redirect_uri:
+Run app.py from shell or command line. Note that the port needs to match what you've set up in your **Reply URL**:
 ```Shell
 $ flask run --port 5000
 ```
