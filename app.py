@@ -50,8 +50,8 @@ def logout():
         "?post_logout_redirect_uri=" + url_for("index", _external=True))
 
 # This page is only used in B2C scenario
-@app.route("/profile")
-def profile():
+@app.route("/edit_profile")
+def edit_profile():
     app = _build_msal_app(authority=app_config.B2C_PROFILE_AUTHORITY)
     return redirect(app.get_authorization_request_url([],
         state=str(uuid.uuid4()),
