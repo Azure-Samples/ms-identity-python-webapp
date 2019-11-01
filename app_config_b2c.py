@@ -3,7 +3,7 @@ import os
 b2c_tenant = "fabrikamb2c"
 signupsignin_user_flow = "b2c_1_signupsignin1"
 editprofile_user_flow = "b2c_1_profileediting1"
-authority_template = "https://{tenant}.b2clogin.com/{tenant}.onmicrosoftonline.com/{user_flow}"
+authority_template = "https://{tenant}.b2clogin.com/{tenant}.onmicrosoft.com/{user_flow}"
 
 CLIENT_SECRET = "Enter_the_Client_Secret_Here" # Our Quickstart uses this placeholder
 # In your production app, we recommend you to use other ways to store your secret,
