@@ -37,7 +37,7 @@ This sample demonstrates a Python web application that signs-in users with the M
 ![Overview](./ReadmeFiles/topology.png)
 
 
-## Prerequisite
+## Prerequisites
 
 1. [Create an Azure Active Directory B2C tenant](https://docs.microsoft.com/en-us/azure/active-directory-b2c/tutorial-create-tenant)
 1. [Register an application in Azure Active Directory B2C](https://docs.microsoft.com/en-us/azure/active-directory-b2c/tutorial-register-applications).
@@ -47,13 +47,13 @@ This sample demonstrates a Python web application that signs-in users with the M
 
 ## Update the application
 
-In the tutorial that you completed as part of [the prerequisites, you added a web application in Azure AD B2C](https://docs.microsoft.com/en-us/azure/active-directory-b2c/tutorial-register-applications).
+In the tutorial that you completed as part of the prerequisites, you [added a web application in Azure AD B2C](https://docs.microsoft.com/azure/active-directory-b2c/tutorial-register-applications).
 To enable communication with the sample in this tutorial, you need to add a redirect URI to that application in Azure AD B2C.
 
-* Modify the **Reply URL**, add something like `http://localhost:5000/getAToken` or `https//your_domain.com:5000/getAToken`.
+* Modify an existing or add a new **Reply URL**, for example `http://localhost:5000/getAToken` or `https://your_domain.com:5000/getAToken`.
   You could use any port or any path. Later we will set this sample to match what you register here.
 * On the properties page, record the application ID that you'll use when you configure the web application.
-* Also generate a key for your web application. Record the key that you'll use when you configure this sample.
+* Also generate a key (client secret) for your web application. Record the key that you'll use when you configure this sample.
 
 
 ## Configure the sample
@@ -73,7 +73,7 @@ or download and extract the repository .zip file.
 
 ### Step 2:  Install sample dependency
 
-You will need to install dependencies using pip as follows:
+Install the dependencies using pip:
 
 ```Shell
 $ pip install -r requirements.txt
@@ -109,7 +109,7 @@ Run app.py from shell or command line. Note that the port needs to match what yo
 $ flask run --port 5000
 ```
 
-Now you would be able to visit `http://localhost:5000` and use the sign-in feature.
+You should now be able to visit `http://localhost:5000` and use the sign-in feature.
 This is how you enable authentication in a web application using Azure Active Directory B2C.
 
 
