@@ -5,17 +5,17 @@ languages:
 - html
 products:
 - azure-active-directory
-description: "This sample demonstrates a Python web application calling a Microsoft Graph that is secured using Azure Active Directory."
+description: "This sample demonstrates a Python web application calling a web api that is secured using Azure Active Directory."
 urlFragment: ms-identity-python-webapp
 ---
-# Integrating B2C feature of Microsoft Identity Platform with a Python web application
+# Integrating B2C feature of Microsoft identity platform with a Python web application
 
 ## About this sample
 
 > This sample was initially developed as a web app to demonstrate how to
 > [Integrate Microsoft Identity Platform with a Python web application](https://github.com/Azure-Samples/ms-identity-python-webapp/blob/master/README.md).
 > The same code base can also be used to demonstrate how to
-> Integrate B2C feature of Microsoft Identity Platform with a Python web application.
+> Integrate B2C of Microsoft identity platform with a Python web application.
 > All you need is some different steps to register your app in your own B2C tenant,
 > and then feed those different settings into the configuration file of this sample.
 
@@ -29,10 +29,10 @@ This sample covers the following:
 
 ### Overview
 
-This sample demonstrates a Python web application that signs-in users with the Microsoft identity platform and calls the Microsoft Graph.
+This sample demonstrates a Python web application that signs-in users with the Microsoft identity platform and calls another web api.
 
 1. The python web application uses the Microsoft Authentication Library (MSAL) to obtain an access token from the Microsoft identity platform (formerly Azure AD v2.0):
-2. The access token is used as a bearer token to authenticate the user when calling the Microsoft Graph.
+2. The access token is used as a bearer token to authenticate the user when calling the web api.
 
 ![Overview](./ReadmeFiles/topology.png)
 
