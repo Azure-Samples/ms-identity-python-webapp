@@ -15,7 +15,7 @@ CLIENT_SECRET = "Enter_the_Client_Secret_Here" # Our Quickstart uses this placeh
 
 AUTHORITY = authority_template.format(
     tenant=b2c_tenant, user_flow=signupsignin_user_flow)
-PROFILE_AUTHORITY = authority_template.format(
+B2C_PROFILE_AUTHORITY = authority_template.format(
     tenant=b2c_tenant, user_flow=editprofile_user_flow)
 
 CLIENT_ID = "Enter_the_Application_Id_here"
