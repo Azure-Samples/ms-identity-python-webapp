@@ -20,12 +20,10 @@ def index():
 @app.route("/login")
 def login():
     session["state"] = str(uuid.uuid4())
-    auth_url = _build_msal_app().get_authorization_request_url(
-        app_config.SCOPE,  # Technically we can use empty list [] to just sign in,
-                           # here we choose to also collect end user consent upfront
-        state=session["state"],
-        redirect_uri=url_for("authorized", _external=True))
-    return "<a href='%s'>Login with Microsoft Identity</a>" % auth_url
+    # Technically we could use empty list [] as scopes to do just sign in,
+    # here we choose to also collect end user consent upfront
+    auth_url = _build_auth_url(scopes=app_config.SCOPE, state=session["state"])
+    return render_template("login.html", auth_url=auth_url, version=msal.__version__)
 
 @app.route(app_config.REDIRECT_PATH)  # Its absolute URL must match your app's redirect_uri set in AAD
 def authorized():
@@ -74,10 +72,16 @@ def _save_cache(cache):
     if cache.has_state_changed:
         session["token_cache"] = cache.serialize()
 
-def _build_msal_app(cache=None):
+def _build_msal_app(cache=None, authority=None):
     return msal.ConfidentialClientApplication(
-        app_config.CLIENT_ID, authority=app_config.AUTHORITY,
+        app_config.CLIENT_ID, authority=authority or app_config.AUTHORITY,
         client_credential=app_config.CLIENT_SECRET, token_cache=cache)
+
+def _build_auth_url(authority=None, scopes=None, state=None):
+    return _build_msal_app(authority=authority).get_authorization_request_url(
+        scopes or [],
+        state=state or str(uuid.uuid4()),
+        redirect_uri=url_for("authorized", _external=True))
 
 def _get_token_from_cache(scope=None):
     cache = _load_cache()  # This web app maintains one cache per session
@@ -87,6 +91,8 @@ def _get_token_from_cache(scope=None):
         result = cca.acquire_token_silent(scope, account=accounts[0])
         _save_cache(cache)
         return result
+
+app.jinja_env.globals.update(_build_auth_url=_build_auth_url)  # Used in template
 
 if __name__ == "__main__":
     app.run()
