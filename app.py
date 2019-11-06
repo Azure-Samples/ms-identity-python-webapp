@@ -50,14 +50,6 @@ def logout():
         app_config.AUTHORITY + "/oauth2/v2.0/logout" +
         "?post_logout_redirect_uri=" + url_for("index", _external=True))
 
-# This page is only used in B2C scenario
-@app.route("/edit_profile")
-def edit_profile():
-    app = _build_msal_app(authority=app_config.B2C_PROFILE_AUTHORITY)
-    return redirect(app.get_authorization_request_url([],
-        state=str(uuid.uuid4()),
-        redirect_uri=url_for("authorized", _external=True)))
-
 @app.route("/graphcall")
 def graphcall():
     token = _get_token_from_cache(app_config.SCOPE)

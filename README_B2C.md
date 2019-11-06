@@ -96,6 +96,7 @@ In the steps below, "ClientID" is the same as "Application ID" or "AppId".
    * Replace the value of `CLIENT_SECRET` with the key that you recorded.
    * Replace the value of `signupsignin_user_flow` with `b2c_1_signupsignin1`.
    * Replace the value of `editprofile_user_flow` with `b2c_1_profileediting1`.
+   * Replace the value of `resetpassword_user_flow` with `b2c_1_passwordreset1`.
    * Replace the value of `REDIRECT_PATH` with the path part you set up in **Reply URL**.
      For example, `/getAToken`. It will be used by this sample app to form
      an absolute URL which matches your full **Reply URL**.

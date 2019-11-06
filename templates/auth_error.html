@@ -2,6 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
+    {% if config.get("B2C_RESET_PASSWORD_AUTHORITY") and "AADB2C90118" in result.get("error_description") %}
+      <!-- See also https://docs.microsoft.com/en-us/azure/active-directory-b2c/active-directory-b2c-reference-policies#linking-user-flows -->
+      <meta http-equiv="refresh" content='0;{{_build_auth_url(authority=config["B2C_RESET_PASSWORD_AUTHORITY"])}}'>
+    {% endif %}
 </head>
 <body>
     <h2>Login Failure</h2>
