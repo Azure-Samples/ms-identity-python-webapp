@@ -96,8 +96,6 @@ As a first step you'll need to:
    - In the Redirect URI (optional) section, select **Web** in the combo-box and enter the following redirect URIs: `http://localhost:5000/getAToken`.
 1. Select **Register** to create the application.
 1. On the app **Overview** page, find the **Application (client) ID** value and record it for later. You'll need it to configure the Visual Studio configuration file for this project.
-1. From the app's Overview page, select the **Authentication** section.
-   - In the **Advanced settings** section set **Logout URL** to `http://localhost:5000/logout`
 1. Select **Save**.
 1. From the **Certificates & secrets** page, in the **Client secrets** section, choose **New client secret**:
 

@@ -9,7 +9,6 @@
       "x-ms-id": "PythonWebApp",
       "x-ms-name": "ms-identity-python-webapp",
       "x-ms-version": "2.0",
-      "logoutUrl": "http://localhost:5000/logout",
       "replyUrlsWithType": [
         {
           "url": "http://localhost:5000/getAToken",
