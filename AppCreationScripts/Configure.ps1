@@ -65,7 +65,7 @@ Function AddResourcePermission($requiredAccess, `
 }
 
 #
-# Exemple: GetRequiredPermissions "Microsoft Graph"  "Graph.Read|User.Read"
+# Example: GetRequiredPermissions "Microsoft Graph"  "Graph.Read|User.Read"
 # See also: http://stackoverflow.com/questions/42164581/how-to-configure-a-new-azure-ad-application-through-powershell
 Function GetRequiredPermissions([string] $applicationDisplayName, [string] $requiredDelegatedPermissions, [string]$requiredApplicationPermissions, $servicePrincipal)
 {
@@ -129,9 +129,10 @@ Function ReplaceInTextFile([string] $configFilePath, [System.Collections.HashTab
     Set-Content -Path $configFilePath -Value $lines -Force
 }
 
-
 Set-Content -Value "<html><body><table>" -Path createdApps.html
 Add-Content -Value "<thead><tr><th>Application</th><th>AppId</th><th>Url in the Azure portal</th></tr></thead><tbody>" -Path createdApps.html
+
+$ErrorActionPreference = "Stop"
 
 Function ConfigureApplications
 {
@@ -140,7 +141,6 @@ Function ConfigureApplications
    configuration files in the client and service project  of the visual studio solution (App.Config and Web.Config)
    so that they are consistent with the Applications parameters
 #> 
-
     $commonendpoint = "common"
 
     # $tenantId is the Active Directory Tenant. This is a GUID which represents the "Directory ID" of the AzureAD tenant
@@ -172,7 +172,7 @@ Function ConfigureApplications
     $tenant = Get-AzureADTenantDetail
     $tenantName =  ($tenant.VerifiedDomains | Where { $_._Default -eq $True }).Name
 
-    # Get the user running the script
+    # Get the user running the script to add the user as the app owner
     $user = Get-AzureADUser -ObjectId $creds.Account.Id
 
    # Create the pythonwebapp AAD application
@@ -182,8 +182,8 @@ Function ConfigureApplications
    $fromDate = [DateTime]::Now;
    $key = CreateAppKey -fromDate $fromDate -durationInYears 2 -pw $pw
    $pythonwebappAppKey = $pw
+   # create the application 
    $pythonwebappAadApplication = New-AzureADApplication -DisplayName "python-webapp" `
-                                                        -LogoutUrl "http://localhost:5000/logout" `
                                                         -ReplyUrls "http://localhost:5000/getAToken" `
                                                         -IdentifierUris "https://$tenantName/python-webapp" `
                                                         -AvailableToOtherTenants $True `
@@ -191,6 +191,7 @@ Function ConfigureApplications
                                                         -Oauth2AllowImplicitFlow $true `
                                                         -PublicClient $False
 
+   # create the service principal of the newly created application 
    $currentAppId = $pythonwebappAadApplication.AppId
    $pythonwebappServicePrincipal = New-AzureADServicePrincipal -AppId $currentAppId -Tags {WindowsAzureActiveDirectoryIntegratedApp}
 
@@ -215,7 +216,7 @@ Function ConfigureApplications
    # Add Required Resources Access (from 'pythonwebapp' to 'Microsoft Graph')
    Write-Host "Getting access from 'pythonwebapp' to 'Microsoft Graph'"
    $requiredPermissions = GetRequiredPermissions -applicationDisplayName "Microsoft Graph" `
-                                                -requiredDelegatedPermissions "User.Read" `
+                                                -requiredDelegatedPermissions "User.ReadBasic.All" `
 
    $requiredResourcesAccess.Add($requiredPermissions)
 
@@ -235,7 +236,8 @@ Function ConfigureApplications
 # Pre-requisites
 if ((Get-Module -ListAvailable -Name "AzureAD") -eq $null) { 
     Install-Module "AzureAD" -Scope CurrentUser 
-} 
+}
+
 Import-Module AzureAD
 
 # Run interactively (will ask you for the tenant ID)
