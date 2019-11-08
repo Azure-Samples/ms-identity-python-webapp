@@ -22,12 +22,11 @@
         {
           "Resource": "Microsoft Graph",
           "DelegatedPermissions": [
-            "User.Read"
+            "User.ReadBasic.All"
           ]
         }
       ],
-      "ReplyUrls": "http://localhost:5000/getAToken",
-      "LogoutUrl": "http://localhost:5000/logout"
+      "ReplyUrls": "http://localhost:5000/getAToken"
     }
   ],
 
