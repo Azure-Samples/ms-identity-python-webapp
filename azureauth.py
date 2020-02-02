@@ -44,6 +44,3 @@ class AzureAuth:
     def save_cache(self):
         if self.cache.has_state_changed:
             return self.cache.serialize()
-    
-    def refreshToken():
-        pass
