@@ -1,5 +1,5 @@
 Flask>=1,<2
-Flask-Session>=0,<1
+git+https://github.com/rayluo/flask-session@0.3.x#egg=flask-session
 requests>=2,<3
 msal>=0,<2
 
