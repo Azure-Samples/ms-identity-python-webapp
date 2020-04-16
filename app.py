@@ -4,11 +4,13 @@ from flask import Flask, render_template, session, request, redirect, url_for
 from flask_session import Session  # https://pythonhosted.org/Flask-Session
 import msal
 import app_config
-
+from azureauth import AzureAuth
 
 app = Flask(__name__)
 app.config.from_object(app_config)
 Session(app)
+
+azureAuth = AzureAuth()
 
 
 @app.route("/")
@@ -32,15 +34,15 @@ def authorized():
     if "error" in request.args:  # Authentication/Authorization failure
         return render_template("auth_error.html", result=request.args)
     if request.args.get('code'):
-        cache = _load_cache()
-        result = _build_msal_app(cache=cache).acquire_token_by_authorization_code(
+        azureAuth.load_cache(session)
+        azureAuth.build_msal_app()
+        result = azureAuth.acquire_token_by_authorization_code(
             request.args['code'],
-            scopes=app_config.SCOPE,  # Misspelled scope would cause an HTTP 400 error here
-            redirect_uri=url_for("authorized", _external=True))
+            url_for("authorized", _external=True))
         if "error" in result:
             return render_template("auth_error.html", result=result)
         session["user"] = result.get("id_token_claims")
-        _save_cache(cache)
+        session["token_cache"] = azureAuth.save_cache()
     return redirect(url_for("index"))
 
 @app.route("/logout")
@@ -52,7 +54,8 @@ def logout():
 
 @app.route("/graphcall")
 def graphcall():
-    token = _get_token_from_cache(app_config.SCOPE)
+    token = azureAuth.get_token_from_cache(session)
+    session["token_cache"] = azureAuth.save_cache()
     if not token:
         return redirect(url_for("login"))
     graph_data = requests.get(  # Use token to call downstream service
@@ -61,36 +64,8 @@ def graphcall():
         ).json()
     return render_template('display.html', result=graph_data)
 
-
-def _load_cache():
-    cache = msal.SerializableTokenCache()
-    if session.get("token_cache"):
-        cache.deserialize(session["token_cache"])
-    return cache
-
-def _save_cache(cache):
-    if cache.has_state_changed:
-        session["token_cache"] = cache.serialize()
-
-def _build_msal_app(cache=None, authority=None):
-    return msal.ConfidentialClientApplication(
-        app_config.CLIENT_ID, authority=authority or app_config.AUTHORITY,
-        client_credential=app_config.CLIENT_SECRET, token_cache=cache)
-
 def _build_auth_url(authority=None, scopes=None, state=None):
-    return _build_msal_app(authority=authority).get_authorization_request_url(
-        scopes or [],
-        state=state or str(uuid.uuid4()),
-        redirect_uri=url_for("authorized", _external=True))
-
-def _get_token_from_cache(scope=None):
-    cache = _load_cache()  # This web app maintains one cache per session
-    cca = _build_msal_app(cache=cache)
-    accounts = cca.get_accounts()
-    if accounts:  # So all account(s) belong to the current signed-in user
-        result = cca.acquire_token_silent(scope, account=accounts[0])
-        _save_cache(cache)
-        return result
+    return azureAuth.get_auth_url(session["state"], url_for("authorized", _external=True))
 
 app.jinja_env.globals.update(_build_auth_url=_build_auth_url)  # Used in template
 
