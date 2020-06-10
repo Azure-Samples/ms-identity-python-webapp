@@ -30,7 +30,7 @@ REDIRECT_PATH = "/getAToken"  # It will be used to form an absolute URL
 ENDPOINT = ''
 
 # These are the scopes that you defined for the web API
-SCOPE = ["demo.read", "demo.write"]
+SCOPE = []  # For illustration purposes only: ["demo.read", "demo.write"]
 
 SESSION_TYPE = "filesystem"  # So token cache will be stored in server-side session
 
