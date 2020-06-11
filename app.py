@@ -25,6 +25,9 @@ def index():
 
 @app.route("/login")
 def login():
+    if request.url.startswith("http://127.0.0.1"):
+        # AAD would not accept a redirect_uri using loopback IP
+        return redirect(request.url.replace("127.0.0.1", "localhost"))
     session["state"] = str(uuid.uuid4())
     # Technically we could use empty list [] as scopes to do just sign in,
     # here we choose to also collect end user consent upfront
