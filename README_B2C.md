@@ -96,7 +96,7 @@ Configure the pythonwebapp project by making the following changes.
 
 ## Enable authentication
 
-Run app.py from shell or command line. Note that the port needs to match what you've set up in your **Redirect URI**:
+Run app.py from shell or command line. Note that the host and port values need to match what you've set up in your **Redirect URI**:
 
 ```Shell
 $ flask run --host localhost --port 5000
