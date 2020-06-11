@@ -1,9 +1,9 @@
 import os
 
 b2c_tenant = "fabrikamb2c"
-signupsignin_user_flow = "b2c_1_signupsignin1"
-editprofile_user_flow = "b2c_1_profileediting1"
-resetpassword_user_flow = "b2c_1_passwordreset1"
+signupsignin_user_flow = "B2C_1_signupsignin1"
+editprofile_user_flow = "B2C_1_profileediting1"
+resetpassword_user_flow = "B2C_1_passwordreset1"
 authority_template = "https://{tenant}.b2clogin.com/{tenant}.onmicrosoft.com/{user_flow}"
 
 CLIENT_ID = "Enter_the_Application_Id_here" # Application (client) ID of app registration
