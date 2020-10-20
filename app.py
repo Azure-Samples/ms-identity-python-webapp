@@ -4,6 +4,7 @@ from flask import Flask, render_template, session, request, redirect, url_for
 from flask_session import Session  # https://pythonhosted.org/Flask-Session
 import msal
 import app_config
+import time
 
 
 app = Flask(__name__)
@@ -19,9 +20,10 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
 @app.route("/")
 def index():
-    if not session.get("user"):
+    if is_authenticated():
+        return render_template('index.html', user=session["user"], version=msal.__version__)
+    else:
         return redirect(url_for("login"))
-    return render_template('index.html', user=session["user"], version=msal.__version__)
 
 @app.route("/login")
 def login():
@@ -67,6 +69,14 @@ def graphcall():
         ).json()
     return render_template('display.html', result=graph_data)
 
+
+def is_authenticated():
+    try:
+        # does the id token exist in session? does exp claim exist in the id token? and is exp still valid?
+        assert(session["user"]["exp"] > time.time())
+        return True
+    except:
+        return False
 
 def _load_cache():
     cache = msal.SerializableTokenCache()
