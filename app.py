@@ -18,12 +18,22 @@ Session(app)
 from werkzeug.middleware.proxy_fix import ProxyFix
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
+from functools import wraps
+def auth_required(f):
+    @wraps(f)
+    def is_authenticated(*args, **kwargs):
+        try:
+            # does the id token exist in session? does exp claim exist in the id token? and is exp still valid?
+            assert(session["user"]["exp"] > time.time())
+            return f(*args, **kwargs)
+        except:
+            return redirect(url_for("login"))
+    return is_authenticated
+
 @app.route("/")
+@auth_required
 def index():
-    if is_authenticated():
-        return render_template('index.html', user=session["user"], version=msal.__version__)
-    else:
-        return redirect(url_for("login"))
+    return render_template('index.html', user=session["user"], version=msal.__version__)
 
 @app.route("/login")
 def login():
@@ -53,12 +63,15 @@ def authorized():
 
 @app.route("/logout")
 def logout():
-    session.clear()  # Wipe out user and its token cache from session
+     # Wipe out user and its token cache from session
+    session.pop("user", None)
+    session.pop("token_cache", None)
     return redirect(  # Also logout from your tenant's web session
         app_config.AUTHORITY + "/oauth2/v2.0/logout" +
         "?post_logout_redirect_uri=" + url_for("index", _external=True))
 
 @app.route("/graphcall")
+@auth_required
 def graphcall():
     token = _get_token_from_cache(app_config.SCOPE)
     if not token:
@@ -68,15 +81,6 @@ def graphcall():
         headers={'Authorization': 'Bearer ' + token['access_token']},
         ).json()
     return render_template('display.html', result=graph_data)
-
-
-def is_authenticated():
-    try:
-        # does the id token exist in session? does exp claim exist in the id token? and is exp still valid?
-        assert(session["user"]["exp"] > time.time())
-        return True
-    except:
-        return False
 
 def _load_cache():
     cache = msal.SerializableTokenCache()
