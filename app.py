@@ -18,15 +18,18 @@ Session(app)
 from werkzeug.middleware.proxy_fix import ProxyFix
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
+# wrap authN protected endpoints with authN + validity check:
 from functools import wraps
 def auth_required(f):
     @wraps(f)
     def is_authenticated(*args, **kwargs):
         try:
             # does the id token exist in session? does exp claim exist in the id token? and is exp still valid?
-            assert(session["user"]["exp"] > time.time())
+            assert session["user"]["exp"] > time.time()
+            # if yes, proceed to the protected method
             return f(*args, **kwargs)
         except:
+            # no id token or expired token? login
             return redirect(url_for("login"))
     return is_authenticated
 
@@ -38,9 +41,14 @@ def index():
 @app.route("/login")
 def login():
     session["state"] = str(uuid.uuid4())
+    # check for an existing login session and its username:
+    preferred_username = session.get('user', {}).get('preferred_username', None)
     # Technically we could use empty list [] as scopes to do just sign in,
     # here we choose to also collect end user consent upfront
-    auth_url = _build_auth_url(scopes=app_config.SCOPE, state=session["state"])
+    auth_url = _build_auth_url(scopes=app_config.SCOPE, state=session["state"], login_hint=preferred_username)
+    if preferred_username:
+        app.logger.info('ID token exists but is expired. Will attempt interaction-less ID token acquisition')
+        return redirect(auth_url)
     return render_template("login.html", auth_url=auth_url, version=msal.__version__)
 
 @app.route(app_config.REDIRECT_PATH)  # Its absolute URL must match your app's redirect_uri set in AAD
@@ -97,11 +105,13 @@ def _build_msal_app(cache=None, authority=None):
         app_config.CLIENT_ID, authority=authority or app_config.AUTHORITY,
         client_credential=app_config.CLIENT_SECRET, token_cache=cache)
 
-def _build_auth_url(authority=None, scopes=None, state=None):
+def _build_auth_url(authority=None, scopes=None, state=None, prompt=None, login_hint=None):
     return _build_msal_app(authority=authority).get_authorization_request_url(
         scopes or [],
         state=state or str(uuid.uuid4()),
-        redirect_uri=url_for("authorized", _external=True))
+        redirect_uri=url_for("authorized", _external=True),
+        prompt=prompt or ('none' if login_hint else 'select_account'), # prefer explicit prompt, then login_hint's none, then select_account
+        login_hint=login_hint)
 
 def _get_token_from_cache(scope=None):
     cache = _load_cache()  # This web app maintains one cache per session
