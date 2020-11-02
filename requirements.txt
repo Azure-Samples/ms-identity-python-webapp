@@ -4,3 +4,11 @@ flask-session~=0.3.2
 requests>=2,<3
 msal>=0.6.1,<2
 
+# cachelib==0.1  # Only need this if you are running Python 2
+# Note: This sample does NOT directly depend on cachelib.
+# It is an indirect dependency of flask-session.
+# Cachelib 0.1.1 no longer supports Python 2
+# (see also https://github.com/pallets/cachelib/issues/14)
+# So, if you still need to run your app in Python 2,
+# your workaround is to pin cachelib to its older version 0.1,
+# but keep in mind it contains a known bug https://github.com/pallets/cachelib/pull/12
