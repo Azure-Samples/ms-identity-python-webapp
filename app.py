@@ -25,25 +25,18 @@ def index():
 
 @app.route("/login")
 def login():
-    session["state"] = str(uuid.uuid4())
     # Technically we could use empty list [] as scopes to do just sign in,
     # here we choose to also collect end user consent upfront
-    auth_url = _build_auth_url(scopes=app_config.SCOPE, state=session["state"])
-    return render_template("login.html", auth_url=auth_url, version=msal.__version__)
+    session["flow"] = _build_auth_code_flow(scopes=app_config.SCOPE)
+    return render_template("login.html", auth_url=session["flow"]["auth_uri"], version=msal.__version__)
 
 @app.route(app_config.REDIRECT_PATH)  # Its absolute URL must match your app's redirect_uri set in AAD
 def authorized():
-    if request.args.get('state') != session.get("state"):
-        return redirect(url_for("index"))  # No-OP. Goes back to Index page
-    if "error" in request.args:  # Authentication/Authorization failure
-        return render_template("auth_error.html", result=request.args)
-    if request.args.get('code'):
+    if ("flow" in session and ("code" in request.args or "error" in request.args)
+            and request.args.get('state') == session["flow"].get("state")):
         cache = _load_cache()
-        result = _build_msal_app(cache=cache).acquire_token_by_authorization_code(
-            request.args['code'],
-            scopes=app_config.SCOPE,  # Misspelled scope would cause an HTTP 400 error here
-            redirect_uri=url_for("authorized", _external=True))
-        if "error" in result:
+        result = _build_msal_app(cache=cache).acquire_token_by_auth_code_flow(session["flow"], request.args)
+        if "error" in result:  # Authentication/Authorization failure
             return render_template("auth_error.html", result=result)
         session["user"] = result.get("id_token_claims")
         _save_cache(cache)
@@ -83,10 +76,9 @@ def _build_msal_app(cache=None, authority=None):
         app_config.CLIENT_ID, authority=authority or app_config.AUTHORITY,
         client_credential=app_config.CLIENT_SECRET, token_cache=cache)
 
-def _build_auth_url(authority=None, scopes=None, state=None):
-    return _build_msal_app(authority=authority).get_authorization_request_url(
+def _build_auth_code_flow(authority=None, scopes=None):
+    return _build_msal_app(authority=authority).initiate_auth_code_flow(
         scopes or [],
-        state=state or str(uuid.uuid4()),
         redirect_uri=url_for("authorized", _external=True))
 
 def _get_token_from_cache(scope=None):
@@ -98,7 +90,7 @@ def _get_token_from_cache(scope=None):
         _save_cache(cache)
         return result
 
-app.jinja_env.globals.update(_build_auth_url=_build_auth_url)  # Used in template
+app.jinja_env.globals.update(_build_auth_code_flow=_build_auth_code_flow)  # Used in template
 
 if __name__ == "__main__":
     app.run()

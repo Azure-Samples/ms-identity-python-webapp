@@ -2,7 +2,7 @@ Flask>=1,<2
 werkzeug>=1,<2
 flask-session~=0.3.2
 requests>=2,<3
-msal>=0.6.1,<2
+msal>=1.7,<2
 
 # cachelib==0.1  # Only need this if you are running Python 2
 # Note: This sample does NOT directly depend on cachelib.
