@@ -32,14 +32,16 @@ def login():
 
 @app.route(app_config.REDIRECT_PATH)  # Its absolute URL must match your app's redirect_uri set in AAD
 def authorized():
-    if ("flow" in session and ("code" in request.args or "error" in request.args)
-            and request.args.get('state') == session["flow"].get("state")):
+    try:
         cache = _load_cache()
-        result = _build_msal_app(cache=cache).acquire_token_by_auth_code_flow(session["flow"], request.args)
-        if "error" in result:  # Authentication/Authorization failure
-            return render_template("auth_error.html", result=result)
+        result = _build_msal_app(cache=cache).acquire_token_by_auth_code_flow(
+            session.get("flow", {}), request.args)
+        if "error" in result:
+            return render_template("error.html", result)
         session["user"] = result.get("id_token_claims")
         _save_cache(cache)
+    except ValueError:  # Usually caused by CSRF
+        pass  # Simply ignore them
     return redirect(url_for("index"))
 
 @app.route("/logout")
