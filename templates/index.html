@@ -12,7 +12,7 @@
     {% endif %}
 
     {% if config.get("B2C_PROFILE_AUTHORITY") %}
-      <li><a href='{{_build_auth_url(authority=config["B2C_PROFILE_AUTHORITY"])}}'>Edit Profile</a></li>
+      <li><a href='{{_build_auth_code_flow(authority=config["B2C_PROFILE_AUTHORITY"])["auth_uri"]}}'>Edit Profile</a></li>
     {% endif %}
 
     <li><a href="/logout">Logout</a></li>
