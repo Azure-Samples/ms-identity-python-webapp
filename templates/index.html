@@ -12,12 +12,12 @@
     {% endif %}
 
     {% if config.get("B2C_PROFILE_AUTHORITY") %}
-      <li><a href='{{_build_auth_code_flow(authority=config["B2C_PROFILE_AUTHORITY"])["auth_uri"]}}'>Edit Profile</a></li>
+      <li><a href='{{config.get("B2C_PROFILE_AUTHORITY")}}?client_id={{config.get("CLIENT_ID")}}'>Edit Profile</a></li>
     {% endif %}
 
     <li><a href="/logout">Logout</a></li>
     <hr>
-    <footer style="text-align: right">Powered by MSAL Python {{ version }}</footer>
+    <footer style="text-align: right">Powered by Identity Web {{ version }}</footer>
 </body>
 </html>
 
