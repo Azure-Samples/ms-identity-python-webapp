@@ -1,4 +1,6 @@
-Flask>=1,<2
+# Flask 1.* used to work, until their upstream package brought in a breaking change https://github.com/pallets/markupsafe/issues/286
+Flask>=2,<3
+
 werkzeug>=1,<2
 flask-session>=0.3.2,<0.5
 requests>=2,<3
