@@ -12,7 +12,8 @@ urlFragment: ms-identity-python-webapp
 ## About this sample
 
 > This sample is also available as a quickstart for the Microsoft identity platform:
-[Quickstart: Add sign-in with Microsoft to a Python web app](https://docs.microsoft.com/en-us/azure/active-directory/develop/web-app-quickstart?pivots=devlang-python)
+[Quickstart: Add sign-in with Microsoft to a Python web app](https://docs.microsoft.com/azure/active-directory/develop/web-app-quickstart?pivots=devlang-python)
+
 
 ### Overview
 
