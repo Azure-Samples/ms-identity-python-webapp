@@ -35,7 +35,7 @@ see [Authentication Scenarios for Azure AD](https://docs.microsoft.com/en-us/azu
 
 To run this sample, you'll need:
 
-> - [Python 2.7+](https://www.python.org/downloads/release/python-2713/) or [Python 3+](https://www.python.org/downloads/release/python-364/)
+> - [Python 3](https://www.python.org/downloads/)
 > - An Azure Active Directory (Azure AD) tenant. For more information on how to get an Azure AD tenant, see [how to get an Azure AD tenant.](https://docs.microsoft.com/azure/active-directory/develop/quickstart-create-new-tenant)
 
 
@@ -47,7 +47,7 @@ From your shell or command line:
 git clone https://github.com/Azure-Samples/ms-identity-python-webapp.git
 ```
 
-or download and extract the repository .zip file.
+or download and extract [the repository .zip file](https://github.com/Azure-Samples/ms-identity-python-webapp/archive/refs/heads/master.zip).
 
 > Given that the name of the sample is quite long, you might want to clone it in a folder close to the root of your hard drive, to avoid file name length limitations when running on Windows.
 
@@ -138,7 +138,7 @@ In the steps below, "ClientID" is the same as "Application ID" or "AppId".
 $ pip install -r requirements.txt
 ```
 
-Run app.py from shell or command line. Note that the host and port values need to match what you've set up in your redirect_uri:
+Run Flask on this project's directory (where `app.py` locates). Note that the host and port values need to match what you've set up in your redirect_uri:
 
 ```Shell
 $ flask run --host localhost --port 5000
