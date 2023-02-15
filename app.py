@@ -1,9 +1,10 @@
-from flask import Flask, render_template, session, request, redirect, url_for
-from flask_session import Session  # https://pythonhosted.org/Flask-Session
-import identity, identity.web
+import identity
+import identity.web
 import requests
-import app_config
+from flask import Flask, redirect, render_template, request, session, url_for
+from flask_session import Session  # https://pythonhosted.org/Flask-Session
 
+import app_config
 
 app = Flask(__name__)
 app.config.from_object(app_config)
@@ -14,6 +15,7 @@ Session(app)
 # and to generate https scheme when it is deployed behind reversed proxy.
 # See also https://flask.palletsprojects.com/en/1.0.x/deploying/wsgi-standalone/#proxy-setups
 from werkzeug.middleware.proxy_fix import ProxyFix
+
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
 auth = identity.web.Auth(
