@@ -2,13 +2,11 @@ import identity
 import identity.web
 import requests
 from flask import Flask, redirect, render_template, request, session, url_for
-from flask_session import Session  # https://pythonhosted.org/Flask-Session
 
 import app_config
 
 app = Flask(__name__)
 app.config.from_object(app_config)
-Session(app)
 
 # This section is needed for url_for("foo", _external=True) to automatically
 # generate http scheme when this sample is running on localhost,
