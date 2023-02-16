@@ -1,4 +1,6 @@
 Flask>=2
+Flask-Session2
 werkzeug>=2
 requests>=2,<3
 identity>=0.2,<0.3
+python-dotenv
