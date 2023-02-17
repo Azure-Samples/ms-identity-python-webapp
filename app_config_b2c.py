@@ -1,3 +1,5 @@
+import os
+
 b2c_tenant = "fabrikamb2c"
 signupsignin_user_flow = "B2C_1_signupsignin1"
 editprofile_user_flow = "B2C_1_profileediting1"
