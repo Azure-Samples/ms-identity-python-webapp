@@ -9,13 +9,10 @@ resetpassword_user_flow = "B2C_1_passwordreset1"  # Note: Legacy setting.
 
 authority_template = "https://{tenant}.b2clogin.com/{tenant}.onmicrosoft.com/{user_flow}"
 
-CLIENT_ID = "Enter_the_Application_Id_here"  # Application (client) ID of app registration
-
-CLIENT_SECRET = "Enter_the_Client_Secret_Here"  # Placeholder - for use ONLY during testing.
-# In a production app, we recommend you use a more secure method of storing your secret,
-# like Azure Key Vault. Or, use an environment variable as described in Flask's documentation:
-# https://flask.palletsprojects.com/en/2.2.x/config/#configuring-from-environment-variables
-# CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+# Application (client) ID of app registration
+CLIENT_ID = os.getenv("CLIENT_ID")
+# Application's generated client secret: never check this into source control!
+CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 
 AUTHORITY = authority_template.format(tenant=b2c_tenant, user_flow=signupsignin_user_flow)
 B2C_PROFILE_AUTHORITY = authority_template.format(tenant=b2c_tenant, user_flow=editprofile_user_flow)
