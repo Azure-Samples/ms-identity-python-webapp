@@ -1,6 +1,7 @@
 Flask>=2
-Flask-Session2
+# If Flask-Session is not maintained in future, Flask-Session2 should work as well
+Flask-Session>=0.3.2,<0.5
 werkzeug>=2
 requests>=2,<3
 identity>=0.2,<0.3
-python-dotenv
+python-dotenv<0.22

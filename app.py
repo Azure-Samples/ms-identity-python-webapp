@@ -27,21 +27,18 @@ auth = identity.web.Auth(
 
 @app.route("/login")
 def login():
-    result = auth.log_in(
-        # Have user consent scopes during log-in
-        scopes=app_config.SCOPE,
-        # Optional. If present, this absolute URL must match your app's redirect_uri registered in Azure Portal
-        redirect_uri=url_for("auth_response", _external=True),
-    )
-    return render_template("login.html", version=identity.__version__, **result)
+    return render_template("login.html", version=identity.__version__, **auth.log_in(
+        scopes=app_config.SCOPE, # Have user consent to scopes during log-in
+        redirect_uri=url_for("auth_response", _external=True), # Optional. If present, this absolute URL must match your app's redirect_uri registered in Azure Portal
+        ))
 
 
 @app.route(app_config.REDIRECT_PATH)
 def auth_response():
     result = auth.complete_log_in(request.args)
-    if "error" not in result:
-        return redirect(url_for("index"))
-    return render_template("auth_error.html", result=result)
+    if "error" in result:
+        return render_template("auth_error.html", result=result)
+    return redirect(url_for("index"))
 
 
 @app.route("/logout")
