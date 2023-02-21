@@ -62,7 +62,7 @@ def call_downstream_api():
     api_result = requests.get(
         app_config.ENDPOINT,
         headers={'Authorization': 'Bearer ' + token['access_token']},
-        timeout=30
+        timeout=30,
     ).json()
     return render_template('display.html', result=api_result)
 

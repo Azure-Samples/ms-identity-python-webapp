@@ -5,7 +5,7 @@ CLIENT_ID = os.getenv("CLIENT_ID")
 # Application's generated client secret: never check this into source control!
 CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 
-#AUTHORITY = "https://login.microsoftonline.com/"  # For multi-tenant app
+# AUTHORITY = "https://login.microsoftonline.com/"  # For multi-tenant app
 AUTHORITY = f"https://login.microsoftonline.com/{os.getenv('TENANT_ID')}"
 
 REDIRECT_PATH = "/getAToken"  # Used for forming an absolute URL to your redirect URI.
