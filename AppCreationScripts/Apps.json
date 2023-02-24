@@ -43,11 +43,11 @@
       ],
       "codeConfigurations": [
         {
-          "settingFile": "/app_config.py",
+          "settingFile": "/.env",
           "replaceTokens": {
-            "appId": "Enter_the_Application_Id_here",
+            "appId": "<client id>",
             "tenantId": "common",
-            "clientSecret": "Enter_the_Client_Secret_Here",
+            "clientSecret": "<client secret>",
             "authorityEndpointHost": "https://login.microsoftonline.com/",
             "msgraphEndpointHost": "https://graph.microsoft.com/"
           }

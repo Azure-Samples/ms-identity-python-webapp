@@ -111,6 +111,11 @@ Function ReplaceInLine([string] $line, [string] $key, [string] $value)
 
 Function ReplaceInTextFile([string] $configFilePath, [System.Collections.HashTable] $dictionary)
 {
+    # Check if text file exists. If not, copy .env.sample.
+    if (!(Test-Path $configFilePath))
+    {
+        Copy-Item "$configFilePath.sample" $configFilePath
+    }
     $lines = Get-Content $configFilePath
     $index = 0
     while($index -lt $lines.Length)
@@ -225,9 +230,9 @@ Function ConfigureApplications
    Write-Host "Granted permissions."
 
    # Update config file for 'pythonwebapp'
-   $configFile = $pwd.Path + "\..\app_config.py"
+   $configFile = $pwd.Path + "\..\.env"
    Write-Host "Updating the sample code ($configFile)"
-   $dictionary = @{ "Enter_the_Tenant_Name_Here" = $tenantName;"Enter_the_Client_Secret_Here" = $pythonwebappAppKey;"Enter_the_Application_Id_here" = $pythonwebappAadApplication.AppId };
+   $dictionary = @{ "<tenant id>" = $tenantName;"<client secret>" = $pythonwebappAppKey;"<client id>" = $pythonwebappAadApplication.AppId };
    ReplaceInTextFile -configFilePath $configFile -dictionary $dictionary
   
    Add-Content -Value "</tbody></table></body></html>" -Path createdApps.html  
