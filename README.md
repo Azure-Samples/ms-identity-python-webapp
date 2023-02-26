@@ -11,8 +11,11 @@ urlFragment: ms-identity-python-webapp
 
 This is a Python web application that uses the Flask framework and the Microsoft identity platform to sign in users and make authenticated calls to the Microsoft Graph API.
 
-To get started with this sample, follow this tutorial:
-[Quickstart: Add sign-in with Microsoft to a Python web app](https://docs.microsoft.com/azure/active-directory/develop/web-app-quickstart?pivots=devlang-python).
+To get started with this sample, you have two options.
+
+* Using the Azure portal to create the Azure AD applications and related objects. Follow this tutorial:
+  [Quickstart: Add sign-in with Microsoft to a Python web app](https://docs.microsoft.com/azure/active-directory/develop/web-app-quickstart?pivots=devlang-python).
+* Using PowerShell scripts that automatically create the Azure AD applications and related objects (passwords, permissions, dependencies) for you, and then modify the applications' configuration files. To use this automation, follow the steps in the [App Creation Scripts README](./AppCreationScripts/AppCreationScripts.md).
 
 
 ## Using PowerShell scripts
