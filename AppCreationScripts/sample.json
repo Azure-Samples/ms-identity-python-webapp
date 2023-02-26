@@ -40,18 +40,18 @@
     {
       "App": "pythonwebapp",
       "SettingKind": "Replace",
-      "SettingFile": "\\..\\app_config.py",
+      "SettingFile": "\\..\\.env",
       "Mappings": [
         {
-          "key": "Enter_the_Tenant_Name_Here",
+          "key": "<tenant id>",
           "value": "$tenantName"
         },
         {
-          "key": "Enter_the_Client_Secret_Here",
+          "key": "<client secret>",
           "value": ".AppKey"
         },
         {
-          "key": "Enter_the_Application_Id_here",
+          "key": "<client id>",
           "value": ".AppId"
         }
       ]
