@@ -1,6 +1,6 @@
 import os
 
-b2c_tenant = os.getenv('TENANT_NAME')
+b2c_tenant = os.getenv('TENANT_ID')
 signupsignin_user_flow = os.getenv('SIGNUPSIGNIN_USER_FLOW')
 editprofile_user_flow = os.getenv('EDITPROFILE_USER_FLOW')
 
