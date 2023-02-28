@@ -1,10 +1,10 @@
 import os
 
-b2c_tenant = "fabrikamb2c"
-signupsignin_user_flow = "B2C_1_signupsignin1"
-editprofile_user_flow = "B2C_1_profileediting1"
+b2c_tenant = os.getenv('TENANT_NAME')
+signupsignin_user_flow = os.getenv('SIGNUPSIGNIN_USER_FLOW')
+editprofile_user_flow = os.getenv('EDITPROFILE_USER_FLOW')
 
-resetpassword_user_flow = "B2C_1_passwordreset1"  # Note: Legacy setting.
+resetpassword_user_flow = os.getenv('RESETPASSWORD_USER_FLOW')  # Note: Legacy setting.
 # If you are using the new
 # "Recommended user flow" (https://docs.microsoft.com/en-us/azure/active-directory-b2c/user-flow-versions),
 # you can remove the resetpassword_user_flow and the B2C_RESET_PASSWORD_AUTHORITY settings from this file.
@@ -28,10 +28,10 @@ REDIRECT_PATH = "/getAToken"  # Used for forming an absolute URL to your redirec
 # The absolute URL must match the redirect URI you set
 # in the app's registration in the Azure portal.
 
-# This is the API resource endpoint
-ENDPOINT = ''  # Application ID URI of app registration in Azure portal
+# This is the API resource endpoint (*not* the endpoint of this app!)
+ENDPOINT = ''
 
 # These are the scopes you've exposed in the web API app registration in the Azure portal
-SCOPE = []  # Example with two exposed scopes: ["demo.read", "demo.write"]
+SCOPE = []
 
 SESSION_TYPE = "filesystem"  # Specifies the token cache should be stored in server-side session
