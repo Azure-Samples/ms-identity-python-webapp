@@ -20,7 +20,7 @@ ENDPOINT = 'https://graph.microsoft.com/v1.0/users'  # This resource requires no
 # https://docs.microsoft.com/en-us/graph/permissions-reference
 SCOPE = ["User.ReadBasic.All"]
 
-# Tells the Flask-session2 extension to store sessions in the filesystem
+# Tells the Flask-session extension to store sessions in the filesystem
 SESSION_TYPE = "filesystem"
 # Using the file system will not work in most production systems,
 # it's better to use a database-backed session store instead.
