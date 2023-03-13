@@ -48,6 +48,13 @@ def logout():
 
 @app.route("/")
 def index():
+    if not (app.config["CLIENT_ID"] and app.config["CLIENT_SECRET"]):
+        # This check is not strictly necessary.
+        # You can remove this check from your production code.
+        return """Almost there. Did you forget to set up
+<a target=_blank
+href="https://github.com/Azure-Samples/ms-identity-python-webapp/blob/master/.env.sample">
+necessary environment variables</a> for your deployment?"""
     if not auth.get_user():
         return redirect(url_for("login"))
     return render_template('index.html', user=auth.get_user(), version=identity.__version__)

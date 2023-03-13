@@ -17,6 +17,28 @@ To get started with this sample, you have two options:
   [Quickstart: Add sign-in with Microsoft to a Python web app](https://docs.microsoft.com/azure/active-directory/develop/web-app-quickstart?pivots=devlang-python).
 * Use PowerShell scripts that automatically create the Azure AD applications and related objects (passwords, permissions, dependencies) for you, and then modify the configuration files. Follow the steps in the [App Creation Scripts README](./AppCreationScripts/AppCreationScripts.md).
 
+# Deployment
+
+Once you finish testing this web app locally, you can deploy it to your production.
+You may choose any web app hosting services you want.
+Here we will describe how to deploy it to
+[Azure App Service](https://azure.microsoft.com/en-us/products/app-service).
+
+* Follow the ["Quickstart: Deploy a Python (Django or Flask) web app to Azure App Service"](https://learn.microsoft.com/en-us/azure/app-service/quickstart-python),
+  but replace its sample app (which does not do user sign-in) with this web app.
+
+* In particular, if you choose to ["deploy using Local Git" in "step 3 - Deploy your application code to Azure"](https://learn.microsoft.com/en-us/azure/app-service/quickstart-python?tabs=flask%2Cwindows%2Cazure-cli%2Clocal-git-deploy%2Cdeploy-instructions-azportal%2Cterminal-bash%2Cdeploy-instructions-zip-azcli#3---deploy-your-application-code-to-azure),
+  an [application-scope credential](https://learn.microsoft.com/en-us/azure/app-service/deploy-configure-credentials?tabs=portal#appscope)
+  will be automatically created with the shape as `your_app_name\$your_app_name`.
+  But your actual git username is only the `$your_app_name` part.
+
+* Do not forget to setup
+  [several environment variables](https://github.com/Azure-Samples/ms-identity-python-webapp/blob/master/.env.sample)
+  needed by this sample.
+  Otherwise your website will usually render a blank "Internal Error" page
+  (Flask's debug mode output does not seem to be relayed by App Service).
+
+
 ## Contributing
 
 If you find a bug in the sample, please raise the issue on [GitHub Issues](../../issues).
