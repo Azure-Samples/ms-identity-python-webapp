@@ -32,7 +32,7 @@ Here we will describe how to deploy it to
   will be automatically created with the shape as `your_app_name\$your_app_name`.
   But your actual git username is only the `$your_app_name` part.
 
-* [Configure your app's settings](https://learn.microsoft.com/en-us/azure/app-service/configure-common?tabs=portal#configure-app-settings) to define [these environment variables](https://github.com/Azure-Samples/ms-identity-python-webapp/blob/master/.env.sample).
+* [Configure your app's settings](https://learn.microsoft.com/en-us/azure/app-service/configure-common?tabs=portal#configure-app-settings) to define [these environment variables](https://github.com/Azure-Samples/ms-identity-python-webapp/blob/main/.env.sample).
 
 
 ## Contributing
