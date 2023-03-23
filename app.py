@@ -24,6 +24,11 @@ auth = identity.web.Auth(
     client_credential=app.config["CLIENT_SECRET"],
 )
 
+class EasyAuth(identity.web.Auth):
+    def __init__(self, *, session=None):
+        self._session = session
+    def log_in(self, scopes=None):
+        pass
 
 @app.route("/login")
 def login():
@@ -69,6 +74,25 @@ def call_downstream_api():
         timeout=30,
     ).json()
     return render_template('display.html', result=api_result)
+
+@app.route("/foo")
+def foo():
+    return dict(request.headers)
+
+@app.route("/bar")
+def bar():
+    if not request.headers.get("X-MS-TOKEN-AAD-ID-TOKEN"):
+        return redirect("/.auth/login/aad")
+        # Prerequisite:
+        # * You set up your App Service web app to use Microsoft as an identity provider (a.k.a. IdP)
+        #   https://learn.microsoft.com/en-us/azure/app-service/overview-authentication-authorization#identity-providers
+        # * Your IdP app's Authentication must allow Implicit Grant for ID tokens
+        # * Your IdP app registers a redirect_uri https://{your_app_name}.azurewebsites.net/.auth/login/aad/callback
+    try:
+        from msal.oauth2cli.oidc import decode_id_token
+        return decode_id_token(request.headers["X-MS-TOKEN-AAD-ID-TOKEN"])
+    except Exception as e:
+        return str(e)
 
 
 if __name__ == "__main__":
