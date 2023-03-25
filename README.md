@@ -32,11 +32,7 @@ Here we will describe how to deploy it to
   will be automatically created with the shape as `your_app_name\$your_app_name`.
   But your actual git username is only the `$your_app_name` part.
 
-* Do not forget to setup
-  [several environment variables](https://github.com/Azure-Samples/ms-identity-python-webapp/blob/master/.env.sample)
-  needed by this sample.
-  Otherwise your website will usually render a blank "Internal Error" page
-  (Flask's debug mode output does not seem to be relayed by App Service).
+* [Configure your app's settings](https://learn.microsoft.com/en-us/azure/app-service/configure-common?tabs=portal#configure-app-settings) to define [these environment variables](https://github.com/Azure-Samples/ms-identity-python-webapp/blob/master/.env.sample).
 
 
 ## Contributing

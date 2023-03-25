@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Microsoft Identity Python Web App: Index</title>
 </head>
 <body>
     <h1>Microsoft Identity Python Web App</h1>
     <h2>Welcome {{ user.get("name") }}!</h2>
 
+    <ul>
     {% if config.get("ENDPOINT") %}
       <li><a href='/call_downstream_api'>Call a downstream API</a></li>
     {% endif %}
@@ -16,6 +18,8 @@
     {% endif %}
 
     <li><a href="/logout">Logout</a></li>
+    </ul>
+
     <hr>
     <footer style="text-align: right">Powered by Identity Web {{ version }}</footer>
 </body>

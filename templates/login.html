@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Microsoft Identity Python Web App: Login</title>
 </head>
 <body>
     <h1>Microsoft Identity Python Web App</h1>
 
+    <ul>
     {% if user_code %}
-    <ol>
     <li>To sign in, type <b>{{ user_code }}</b> into
       <a href='{{ auth_uri }}' target=_blank>{{ auth_uri }}</a>
       to authenticate.
     </li>
     <li>And then <a href="{{ url_for('auth_response') }}">proceed</a>.</li>
-    </ol>
     {% else %}
     <li><a href='{{ auth_uri }}'>Sign In</a></li>
     {% endif %}
@@ -21,6 +21,7 @@
     {% if config.get("B2C_RESET_PASSWORD_AUTHORITY") %}
     <li><a href="{{config.get('B2C_RESET_PASSWORD_AUTHORITY')}}?client_id={{config.get('CLIENT_ID')}}">Reset Password</a></li>
     {% endif %}
+    </ul>
 
     <hr>
     <footer style="text-align: right">Powered by Identity Web {{ version }}</footer>
