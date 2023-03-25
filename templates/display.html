@@ -5,6 +5,7 @@
     <title>Microsoft Identity Python Web App: API</title>
 </head>
 <body>
+    <a href="javascript:window.history.go(-1)">Back</a> <!-- Displayed on top of a potentially large JSON response, so it will remain visible -->
     <h1>Result of the downstream API Call</h1>
     <pre>{{ result |tojson(indent=4) }}</pre> <!-- Just a generic json viewer -->
 </body>
