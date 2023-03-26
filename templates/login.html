@@ -15,7 +15,6 @@
       </li>
       <li>And then <a href="{{ url_for('auth_response') }}">proceed</a>.</li>
     </ol>
-    {% elif error %}
     {% else %}
     <ul><li><a href='{{ auth_uri }}'>Sign In</a></li></ul>
     {% endif %}
