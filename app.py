@@ -75,6 +75,17 @@ def call_downstream_api():
     ).json()
     return render_template('display.html', result=api_result)
 
+@app.route("/secret")
+#@auth.requires_login(on_failure=lambda: redirect(url_for("login")))
+@auth.requires_authorization(
+    lambda: request.headers,
+    audiences=["https://howdy.ai"],  # TODO: Experimental
+    issuer="https://sts.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47/",  # TODO: How to let common authority accept multi-tenant tokens?
+    on_failure="Unauthorized",
+)
+def secret():
+    return "I could tell you, but then I would have to kill you"
+
 @app.route("/foo")
 def foo():
     return dict(request.headers)

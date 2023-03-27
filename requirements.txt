@@ -4,5 +4,9 @@ Flask>=2.2
 Flask-Session>=0.3.2,<0.5
 werkzeug>=2
 requests>=2,<3
-identity>=0.2,<0.3
+
+#identity>=0.2,<0.3
+git+https://github.com/AzureAD/microsoft-authentication-library-for-python.git@token-validation
+git+https://github.com/rayluo/identity.git@decorator
+
 python-dotenv<0.22
