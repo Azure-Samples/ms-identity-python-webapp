@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
     {% if config.get("B2C_RESET_PASSWORD_AUTHORITY") and "AADB2C90118" in result.get("error_description") %} <!-- This will be reached when user forgot their password -->
       <!-- See also https://docs.microsoft.com/en-us/azure/active-directory-b2c/active-directory-b2c-reference-policies#linking-user-flows -->
       <meta http-equiv="refresh" content='0;{{config.get("B2C_RESET_PASSWORD_AUTHORITY")}}?client_id={{config.get("CLIENT_ID")}}'>
     {% endif %}
+    <title>Microsoft Identity Python Web App: Error</title>
 </head>
 <body>
     <h2>Login Failure</h2>
@@ -18,4 +18,3 @@
     <a href="{{ url_for('index') }}">Homepage</a>
 </body>
 </html>
-
