@@ -18,6 +18,11 @@
    .\Configure.ps1 -TenantId "your test tenant's id" -AzureEnvironmentName "[Optional] - Azure environment, defaults to 'Global'"
    ```
 
+   ```PowerShell
+    cd AppCreationScripts/
+   .\Configure.ps1 -TenantId "your test tenant's id" -AzureEnvironmentName "[Optional] - Azure environment, defaults to 'Global'"
+   ```
+
 ### More details
 
 - [Goal of the provided scripts](#goal-of-the-provided-scripts)
