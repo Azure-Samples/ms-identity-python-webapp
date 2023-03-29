@@ -24,7 +24,7 @@ If you open this project inside a Dev Container in VS Code or inside Github Code
 Run this script to set up the app registration:
 
 ```
-./configure.sh
+./scripts/configure.sh
 ```
 
 ⚠️ Running the script will override the local *.env* file (if one exists) with new values.
