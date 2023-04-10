@@ -1,10 +1,11 @@
-import identity
 import identity.web
 import requests
 from flask import Flask, redirect, render_template, request, session, url_for
 from flask_session import Session
 
 import app_config
+
+__version__ = "0.7.0"  # The version of this sample, for troubleshooting purpose
 
 app = Flask(__name__)
 app.config.from_object(app_config)
@@ -28,7 +29,7 @@ auth = identity.web.Auth(
 
 @app.route("/login")
 def login():
-    return render_template("login.html", version=identity.__version__, **auth.log_in(
+    return render_template("login.html", version=__version__, **auth.log_in(
         scopes=app_config.SCOPE, # Have user consent to scopes during log-in
         redirect_uri=url_for("auth_response", _external=True), # Optional. If present, this absolute URL must match your app's redirect_uri registered in Azure Portal
         ))
@@ -55,7 +56,7 @@ def index():
         return render_template('config_error.html')
     if not auth.get_user():
         return redirect(url_for("login"))
-    return render_template('index.html', user=auth.get_user(), version=identity.__version__)
+    return render_template('index.html', user=auth.get_user(), version=__version__)
 
 
 @app.route("/call_downstream_api")
