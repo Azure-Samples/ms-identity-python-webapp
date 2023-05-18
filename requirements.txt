@@ -1,7 +1,7 @@
 # Our how-to docs will use --debug parameter which is only available in Flask 2.2+
 Flask>=2.2
 # If Flask-Session is not maintained in future, Flask-Session2 should work as well
-Flask-Session>=0.3.2,<0.5
+Flask-Session>=0.3.2,<0.6
 werkzeug>=2
 requests>=2,<3
 identity>=0.2,<0.3
