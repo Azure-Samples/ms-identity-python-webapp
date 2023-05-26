@@ -8,6 +8,7 @@ import app_config
 
 app = Flask(__name__)
 app.config.from_object(app_config)
+assert app.config["REDIRECT_PATH"] != "/", "REDIRECT_PATH must not be /"
 Session(app)
 
 # This section is needed for url_for("foo", _external=True) to automatically
