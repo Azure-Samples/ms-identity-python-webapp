@@ -5,7 +5,7 @@ from flask_session import Session
 
 import app_config
 
-__version__ = "0.7.0"  # The version of this sample, for troubleshooting purpose
+__version__ = "0.8.0"  # The version of this sample, for troubleshooting purpose
 
 app = Flask(__name__)
 app.config.from_object(app_config)
