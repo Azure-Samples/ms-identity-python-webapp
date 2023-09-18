@@ -11,6 +11,10 @@
 <body>
     <h2>Login Failure</h2>
     <dl>
+      {#
+        Flask automatically escapes these unsafe input, so we do not have to.
+        See also https://flask.palletsprojects.com/en/2.0.x/templating/#jinja-setup
+      #}
       <dt>{{ result.get("error") }}</dt>
       <dd>{{ result.get("error_description") }}</dd>
     </dl>
