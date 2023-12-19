@@ -1,0 +1,17 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+flask = ">=2.2"
+flask-session = "<0.6,>=0.3.2"
+werkzeug = ">=2"
+requests = "<3,>=2"
+identity = ">0.3"
+python-dotenv = "<0.22"
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"
