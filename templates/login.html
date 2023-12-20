@@ -20,7 +20,7 @@
     {% endif %}
 
     {% if config.get("B2C_RESET_PASSWORD_AUTHORITY") %}
-    <a href="{{config.get('B2C_RESET_PASSWORD_AUTHORITY')}}?client_id={{config.get('CLIENT_ID')}}">Reset Password</a>
+    <a href='{{Auth(session={}, authority=config["B2C_RESET_PASSWORD_AUTHORITY"], client_id=config["CLIENT_ID"]).log_in(redirect_uri=url_for("auth_response", _external=True))["auth_uri"]}}'>Reset Password</a>
     {% endif %}
 
     <hr>
