@@ -3,8 +3,8 @@ page_type: sample
 languages:
 - python
 products:
-- azure-active-directory
-description: "This sample demonstrates a Python web application calling a Microsoft Graph that is secured using Azure Active Directory."
+- microsoft-entra-id
+description: "This sample demonstrates a Python web application calling a Microsoft Graph that is secured using Microsoft Entra ID."
 urlFragment: ms-identity-python-webapp
 ---
 # Integrating Microsoft Identity Platform with a Python web application
@@ -13,18 +13,18 @@ This is a Python web application that uses the Flask framework and the Microsoft
 
 # Configuration
 
-## If you are configuring your Microsoft Entra ID app or Microsoft Entra External ID app
+## If you are configuring your Microsoft Entra app or Microsoft Entra External ID app
 
 To get started with this sample, you have two options:
 
-* Use the Azure portal to create the Azure AD applications and related objects. Follow the steps in
-  [Quickstart: Add sign-in with Microsoft to a Python web app](https://docs.microsoft.com/azure/active-directory/develop/web-app-quickstart?pivots=devlang-python).
-* Use PowerShell scripts that automatically create the Azure AD applications and related objects (passwords, permissions, dependencies) for you, and then modify the configuration files. Follow the steps in the [App Creation Scripts README](./AppCreationScripts/AppCreationScripts.md).
+* Use the Microsoft Entra admin center to create the Microsoft Entra applications and related objects. Follow the steps in
+  [Quickstart: Add sign-in with Microsoft to a Python web app](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-web-app-python-sign-in?tabs=windows).
+* Use PowerShell scripts that automatically create the Microsoft Entra applications and related objects (passwords, permissions, dependencies) for you, and then modify the configuration files. Follow the steps in the [App Creation Scripts README](./AppCreationScripts/AppCreationScripts.md).
 
 ## If you are configuring your B2C app
 
 This sample can also work as a B2C app. If you are using a B2C tenant, follow
-[Configure authentication in a sample Python web app by using Azure AD B2C](https://learn.microsoft.com/azure/active-directory-b2c/configure-authentication-sample-python-web-app).
+[Configure authentication in a sample Python web app by using Azure Active Directory B2C](https://learn.microsoft.com/azure/active-directory-b2c/configure-authentication-sample-python-web-app).
 
 
 # Deployment
