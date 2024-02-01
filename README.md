@@ -37,12 +37,11 @@ Here we will describe how to deploy it to
 * Follow the ["Quickstart: Deploy a Python (Django or Flask) web app to Azure App Service"](https://learn.microsoft.com/en-us/azure/app-service/quickstart-python),
   but replace its sample app (which does not do user sign-in) with this web app.
 
-* In particular, if you choose to ["deploy using Local Git" in "step 3 - Deploy your application code to Azure"](https://learn.microsoft.com/en-us/azure/app-service/quickstart-python?tabs=flask%2Cwindows%2Cazure-cli%2Clocal-git-deploy%2Cdeploy-instructions-azportal%2Cterminal-bash%2Cdeploy-instructions-zip-azcli#3---deploy-your-application-code-to-azure),
-  an [application-scope credential](https://learn.microsoft.com/en-us/azure/app-service/deploy-configure-credentials?tabs=portal#appscope)
-  will be automatically created with the shape as `your_app_name\$your_app_name`.
-  But your actual git username is only the `$your_app_name` part.
-
 * [Configure your app's settings](https://learn.microsoft.com/en-us/azure/app-service/configure-common?tabs=portal#configure-app-settings) to define [these environment variables](https://github.com/Azure-Samples/ms-identity-python-webapp/blob/main/.env.sample).
+
+* If your `app_config.py` contains `SESSION_TYPE = "filesystem"`,
+  you shall turn on "session affinity" (a.k.a. "ARR affinity") in your
+  [App Service Web App's Configuration](https://learn.microsoft.com/en-us/azure/app-service/configure-common?tabs=portal#configure-general-settings)
 
 
 ## Contributing
