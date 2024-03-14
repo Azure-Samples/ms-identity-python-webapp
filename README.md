@@ -19,7 +19,7 @@ To get started with this sample, you have two options:
 
 * Use the Azure portal to create the Azure AD applications and related objects. Follow the steps in
   [Quickstart: Add sign-in with Microsoft to a Python web app](https://docs.microsoft.com/azure/active-directory/develop/web-app-quickstart?pivots=devlang-python).
-* Use PowerShell scripts that automatically create the Azure AD applications and related objects (passwords, permissions, dependencies) for you, and then modify the configuration files. Follow the steps in the [App Creation Scripts README](./AppCreationScripts/AppCreationScripts.md).
+* Use shell scripts that use the Azure CLI to automatically create the Azure AD applications and related objects, and then create the *.env* file. Follow the steps in the [App Creation Scripts README](./scripts/AppCreationScripts.md).
 
 ## If you are configuring your B2C app
 
