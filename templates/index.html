@@ -2,26 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Microsoft Identity Python Web App: Index</title>
+    <title>{{ title }}</title>
 </head>
 <body>
-    <h1>Microsoft Identity Python Web App</h1>
+    <h1>{{ title }}</h1>
     <h2>Welcome {{ user.get("name") }}!</h2>
 
+    <!-- There is much hassle to get the local static image to show up on App Service.
+    https://learn.microsoft.com/en-us/azure/app-service/configure-language-python#serve-static-files-for-django-apps
+    For now, we will use a remote image.
+    -->
+    <img src="https://github.com/Azure-Samples/ms-identity-python-webapp-django/raw/main/static/topology.png" alt="Topology">
+
     <ul>
-    {% if config.get("ENDPOINT") %}
-      <li><a href='/call_downstream_api'>Call a downstream API</a></li>
+    {% if api_endpoint %}
+      <li><a href='/call_api'>Call an API</a></li>
     {% endif %}
 
-    {% if config.get("B2C_PROFILE_AUTHORITY") %}
-      <li><a href='{{Auth(session={}, authority=config["B2C_PROFILE_AUTHORITY"], client_id=config["CLIENT_ID"]).log_in(redirect_uri=url_for("auth_response", _external=True))["auth_uri"]}}'>Edit Profile</a></li>
+    {% if edit_profile_url %}
+      <li><a href='{{edit_profile_url}}'>Edit Profile</a></li>
     {% endif %}
 
-    <li><a href="/logout">Logout</a></li>
+    <li><a href="{{ url_for('identity.logout') }}">Logout</a></li>
     </ul>
 
     <hr>
-    <footer style="text-align: right">Microsoft identity platform Web App Sample {{ version }}</footer>
+    <footer style="text-align: right">{{ title }}</footer>
 </body>
 </html>
 
