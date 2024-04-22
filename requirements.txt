@@ -3,3 +3,5 @@ Flask>=2.2
 requests>=2,<3
 identity[flask]>=0.7,<0.8
 python-dotenv<0.22
+azure-identity
+msgraph-sdk
