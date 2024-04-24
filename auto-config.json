@@ -1,0 +1,24 @@
+{   
+    "note": "This is an instruction file used by Microsoft tools to generate Quickstart. App developers do not need to use this file.",
+    "$schema": "https://raw.githubusercontent.com/microsoft/vscode-ms-entra/main/schemas/sampleConfigV1.schema.json",
+    "_version": "1",
+    "credential": "secret",
+    "appUpdates": {
+        "web": {
+            "redirectUris": [
+                "http://localhost:5000/getAToken"
+                ]
+        }
+    },
+    "replacements": {
+        ".env.sample.entra-id":{
+            "out":".env",
+            "tokens": {
+                "<authority url>":"authorityEndpointHost",
+                "<client id>": "appId",
+                "<client secret>":"clientSecret",
+                "<your redirect uri>":"redirectUri"
+            }
+        }
+    }
+}
