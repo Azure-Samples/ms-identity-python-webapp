@@ -1,7 +1,7 @@
 import os
 import requests
 from flask import Flask, render_template
-from identity.flask import Auth
+from ms_identity_python.flask import Auth  # pip install "ms_identity_python[flask] @ git+https://github.com/azure-samples/ms-identity-python@0.8"
 import app_config
 
 __version__ = "0.9.0"  # The version of this sample, for troubleshooting purpose
