@@ -3,8 +3,8 @@ page_type: sample
 languages:
 - python
 products:
-- azure-active-directory
-description: "This sample demonstrates a Python web application calling a Microsoft Graph that is secured using Azure Active Directory."
+- microsoft-entra-id
+description: "This sample demonstrates a Python web application calling a Microsoft Graph that is secured using Microsoft Entra ID."
 urlFragment: ms-identity-python-webapp
 ---
 # Integrating Microsoft Entra ID with a Python web application written in Flask
@@ -12,7 +12,7 @@ urlFragment: ms-identity-python-webapp
 This is a multi-purpose [Flask](https://flask.palletsprojects.com/en/3.0.x/) web app sample.
 Write your app like this once, and the same implementation will support 4x2=8 scenarios.
 
-|                | Microsoft Entra ID | External ID | External ID with Custom Domain | Azure AD B2C |
+|                | Microsoft Entra ID | External ID | External ID with Custom Domain | Azure Active Directory B2C |
 |----------------|--------------------|-------------|--------------------------------|--------------|
 | Web App Sign-In & Sign-Out |   ✓    |      ✓      |                ✓               |       ✓      |
 | Web App Calls a web API |     ✓     |      ✓      |                ✓               |       ✓      |
@@ -41,7 +41,7 @@ Write your app like this once, and the same implementation will support 4x2=8 sc
     <th>Microsoft Entra ID</th>
     <th>Microsoft Entra External ID</th>
     <th>Microsoft Entra External ID with Custom Domain</th>
-    <th>Azure AD B2C</th>
+    <th>Azure Active Directory B2C</th>
   </tr>
 
   <tr>
@@ -65,7 +65,7 @@ Coming soon.
     <td>
 
 Following only the step 1 and 2 (including 2.1 and 2.2) of this
-[Configure authentication in a sample Python web app by using Azure AD B2C](https://learn.microsoft.com/azure/active-directory-b2c/configure-authentication-sample-python-web-app?tabs=linux)
+[Configure authentication in a sample Python web app by using Azure Active Directory B2C](https://learn.microsoft.com/azure/active-directory-b2c/configure-authentication-sample-python-web-app?tabs=linux)
 
 </td>
   </tr>
@@ -92,7 +92,7 @@ as `.env` and then modify `.env` with your app's settings.
 </td>
     <td>
 
-Copy this [Azure AD B2C template](.env.sample.b2c)
+Copy this [Azure Active Directory B2C template](.env.sample.b2c)
 as `.env` and then modify `.env` with your app's settings.
 
 </td>
