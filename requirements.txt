@@ -1,5 +1,14 @@
 # Our how-to docs will use --debug parameter which is only available in Flask 2.2+
 Flask>=2.2
+
 requests>=2,<3
-ms_identity_python[flask] @ https://github.com/azure-samples/ms-identity-python/archive/refs/heads/0.9.zip
 python-dotenv<0.22
+
+ms_identity_python[flask] @ https://github.com/azure-samples/ms-identity-python/archive/refs/heads/0.10.zip
+
+## This is a drop-in replacement
+#identity[flask]>=0.10,<0.11
+
+## Used by identity sdk maintainers during their local testing
+#-e ../identity[flask]
+
